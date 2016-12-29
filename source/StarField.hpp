@@ -18,34 +18,26 @@
 #pragma once
 
 #include <vector>
-#include <functional>
-#include <SDL2/SDL.h>
+
 #include "Vec2.hpp"
 
-class SdlManager
-{
-	SdlManager() = delete;
-public:
-	using KeyDownFunc = std::function<void(SDL_Keycode)>;
-	using ResizeFunc = std::function<void(int, int) >;
+class Renderer;
 
-	static void init();
-	static void destroy();
-	static Vec2<int> getSize();
-	static SDL_Renderer *getSdlRenderer();
-	static void update();
-	static bool shouldQuit();
-	static void onKeyDown(KeyDownFunc func);
-	static void onResize(ResizeFunc func);
+class StarField
+{
+public:
+	void update(float dt, Vec2<int> size);
+	void render(Renderer &renderer);
 
 private:
-	static const int screenWidth = 640;
-	static const int screenHeight = 480;
+	static constexpr int maxStars = 1000;
 
-	static bool mustQuit;
-	static std::vector<KeyDownFunc> keyDownFuncs;
-	static std::vector<ResizeFunc> resizeFuncs;
-
-	static SDL_Window *window;
-	static SDL_Renderer *renderer;
+	class Star
+	{
+	public:
+		void update(float dt);
+		bool shouldRemove( Vec2<int> size) const;
+		Vec2<float> p, v;
+	};
+	std::vector<Star> stars;
 };

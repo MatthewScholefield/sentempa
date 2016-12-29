@@ -16,6 +16,7 @@
  */
 
 #include "SdlManager.hpp"
+#include "Vec2.hpp"
 
 bool SdlManager::mustQuit = false;
 std::vector<SdlManager::KeyDownFunc> SdlManager::keyDownFuncs;
@@ -48,7 +49,7 @@ void SdlManager::destroy()
 	SDL_Quit();
 }
 
-std::pair<int, int> SdlManager::getSize()
+Vec2<int> SdlManager::getSize()
 {
 	int sx, sy;
 	SDL_GetWindowSize(window, &sx, &sy);

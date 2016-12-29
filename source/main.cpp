@@ -18,26 +18,25 @@
 #include "SdlManager.hpp"
 #include "Renderer.hpp"
 #include "Utility.hpp"
+#include "StarField.hpp"
 
 int main()
 {
 	SdlManager::init();
 	const auto size = SdlManager::getSize();
-	Renderer renderer(SdlManager::getSdlRenderer(), size.first, size.second);
+	Renderer renderer(SdlManager::getSdlRenderer(), size.x, size.y);
+	StarField starField;
+	Utility::startTimer();
 
 	while (!SdlManager::shouldQuit())
 	{
+		float dt = Utility::restartTimer();
 		SdlManager::update();
+		starField.update(dt, SdlManager::getSize());
 		
-		renderer.clear(90, 10, 10);
+		renderer.clear(0, 0, 0);
 		{
-			renderer.setColor(10, 110, 200);
-			renderer.beginPoints();
-			{
-				for (int i = 0; i < 20000; ++i)
-					renderer.addPoint(rand() % size.first, rand() % size.second);
-			}
-			renderer.endPoints(Shape::LINES);
+			starField.render(renderer);
 		}
 		renderer.draw();
 		Utility::sleep(1);

@@ -15,13 +15,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <chrono>
 #include <SDL2/SDL.h>
 #include "Utility.hpp"
 
 namespace Utility
 {
+	namespace chr = std::chrono;
+	using sec = chr::seconds;
+	using ns = chr::nanoseconds;
+	using getTime = chr::high_resolution_clock;
+	auto start=getTime::now();
+
 	void sleep(long ms)
 	{
 		SDL_Delay(ms);
+	}
+
+	void startTimer()
+	{
+		start = getTime::now();
+	}
+
+	float restartTimer()
+	{
+		auto end = getTime::now();
+		auto diff = end - start;
+		start = end;
+		return chr::duration_cast<ns>(diff).count()/(1000*1000*1000.f);
 	}
 }

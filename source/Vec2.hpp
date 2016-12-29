@@ -17,9 +17,9 @@
 
 #pragma once
 
-namespace Utility
+template<typename T>
+class Vec2
 {
-	void sleep(long ms);
-	void startTimer();
-	float restartTimer();
-}
+public:
+	T x, y;
+};

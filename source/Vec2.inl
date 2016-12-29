@@ -17,9 +17,4 @@
 
 #pragma once
 
-namespace Utility
-{
-	void sleep(long ms);
-	void startTimer();
-	float restartTimer();
-}
+
