@@ -15,34 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "SdlManager.hpp"
-#include "Renderer.hpp"
+#include <SDL2/SDL.h>
 #include "Utility.hpp"
 
-int main()
+namespace Utility
 {
-	SdlManager::init();
-	const auto size = SdlManager::getSize();
-	Renderer renderer(SdlManager::getSdlRenderer(), size.first, size.second);
-
-	while (!SdlManager::shouldQuit())
+	void sleep(long ms)
 	{
-		SdlManager::update();
-		
-		renderer.clear(90, 10, 10);
-		{
-			renderer.setColor(10, 110, 200);
-			renderer.beginPoints();
-			{
-				for (int i = 0; i < 20000; ++i)
-					renderer.addPoint(rand() % size.first, rand() % size.second);
-			}
-			renderer.endPoints(Shape::LINES);
-		}
-		renderer.draw();
-		Utility::sleep(1);
+		SDL_Delay(ms);
 	}
-
-	SdlManager::destroy();
-	return 0;
 }

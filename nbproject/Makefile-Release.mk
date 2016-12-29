@@ -35,6 +35,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/source/Renderer.o \
+	${OBJECTDIR}/source/SdlManager.o \
+	${OBJECTDIR}/source/Utility.o \
 	${OBJECTDIR}/source/main.o
 
 
@@ -61,6 +64,21 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sentempa: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sentempa ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/source/Renderer.o: source/Renderer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Renderer.o source/Renderer.cpp
+
+${OBJECTDIR}/source/SdlManager.o: source/SdlManager.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/SdlManager.o source/SdlManager.cpp
+
+${OBJECTDIR}/source/Utility.o: source/Utility.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Utility.o source/Utility.cpp
 
 ${OBJECTDIR}/source/main.o: source/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source

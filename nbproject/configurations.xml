@@ -4,6 +4,9 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>source/Renderer.hpp</itemPath>
+      <itemPath>source/SdlManager.hpp</itemPath>
+      <itemPath>source/Utility.hpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -12,6 +15,9 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>source/Renderer.cpp</itemPath>
+      <itemPath>source/SdlManager.cpp</itemPath>
+      <itemPath>source/Utility.cpp</itemPath>
       <itemPath>source/main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -47,6 +53,18 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="source/Renderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Renderer.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/SdlManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/SdlManager.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/Utility.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Utility.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="source/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -71,6 +89,18 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="source/Renderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Renderer.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/SdlManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/SdlManager.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/Utility.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Utility.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="source/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
