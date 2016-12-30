@@ -20,7 +20,7 @@
 #include <vector>
 #include <functional>
 #include <SDL2/SDL.h>
-#include "Vec2.hpp"
+#include "Vec.hpp"
 
 class SdlManager
 {
@@ -31,7 +31,7 @@ public:
 
 	static void init();
 	static void destroy();
-	static Vec2<int> getSize();
+	static Vec2i getSize();
 	static SDL_Renderer *getSdlRenderer();
 	static void update();
 	static bool shouldQuit();

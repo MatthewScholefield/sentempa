@@ -17,4 +17,29 @@
 
 #pragma once
 
+#include "Vec.inl"
 
+template<typename T>
+class Vec2
+{
+public:
+	CREATE_ALL_OPERATORS(2);
+	CREATE_CAST_FN(2);
+	
+	T x, y;
+};
+
+template<typename T>
+class Vec3
+{
+public:
+	CREATE_ALL_OPERATORS(3);
+	CREATE_CAST_FN(3);
+	
+	T x, y, z;
+};
+
+using Vec2i = Vec2<int>;
+using Vec2f = Vec2<float>;
+using Vec3i = Vec3<int>;
+using Vec3f = Vec3<float>;

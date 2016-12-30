@@ -8,8 +8,8 @@
       <itemPath>source/SdlManager.hpp</itemPath>
       <itemPath>source/StarField.hpp</itemPath>
       <itemPath>source/Utility.hpp</itemPath>
-      <itemPath>source/Vec2.hpp</itemPath>
-      <itemPath>source/Vec2.inl</itemPath>
+      <itemPath>source/Vec.hpp</itemPath>
+      <itemPath>source/Vec.inl</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -73,9 +73,9 @@
       </item>
       <item path="source/Utility.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="source/Vec2.hpp" ex="false" tool="3" flavor2="0">
+      <item path="source/Vec.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="source/Vec2.inl" ex="false" tool="3" flavor2="0">
+      <item path="source/Vec.inl" ex="false" tool="3" flavor2="0">
       </item>
       <item path="source/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -117,9 +117,9 @@
       </item>
       <item path="source/Utility.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="source/Vec2.hpp" ex="false" tool="3" flavor2="0">
+      <item path="source/Vec.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="source/Vec2.inl" ex="false" tool="3" flavor2="0">
+      <item path="source/Vec.inl" ex="false" tool="3" flavor2="0">
       </item>
       <item path="source/main.cpp" ex="false" tool="1" flavor2="0">
       </item>

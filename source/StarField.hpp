@@ -19,14 +19,14 @@
 
 #include <vector>
 
-#include "Vec2.hpp"
+#include "Vec.hpp"
 
 class Renderer;
 
 class StarField
 {
 public:
-	void update(float dt, Vec2<int> size);
+	void update(float dt, Vec2i size);
 	void render(Renderer &renderer);
 
 private:
@@ -36,8 +36,8 @@ private:
 	{
 	public:
 		void update(float dt);
-		bool shouldRemove( Vec2<int> size) const;
-		Vec2<float> p, v;
+		bool shouldRemove(Vec2i size) const;
+		Vec2f p, v;
 	};
 	std::vector<Star> stars;
 };

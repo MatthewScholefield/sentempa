@@ -20,7 +20,7 @@
 #include "StarField.hpp"
 #include "Renderer.hpp"
 
-void StarField::update(float dt, Vec2<int> size)
+void StarField::update(float dt, Vec2i size)
 {
 	for (Star &i : stars)
 		i.update(dt);
@@ -31,10 +31,16 @@ void StarField::update(float dt, Vec2<int> size)
 	};
 	stars.erase(std::remove_if(stars.begin(), stars.end(), shouldRemove),
 				stars.end());
-	
-	for (int i=0;i<stars.size()-maxStars;++i)
+
+	for (int i = 0; i < stars.size() - maxStars; ++i)
 	{
-		stars.push_back(Star({{size.x/2.f,size.y/2.f},{(rand()%201 - 100)*1.f,(rand()%201 - 100)*1.f}}));
+		const float x = size.x / 2.f, vx = rand() % 200 - 100;
+		const float y = size.y / 2.f, vy = rand() % 200 - 100;
+
+		stars.push_back({
+			{x, y},
+			{vx, vy}
+		});
 	}
 }
 
@@ -51,11 +57,10 @@ void StarField::render(Renderer &renderer)
 
 void StarField::Star::update(float dt)
 {
-	p.x += v.x * dt;
-	p.y += v.y * dt;
+	p += v * dt;
 }
 
-bool StarField::Star::shouldRemove(Vec2<int> size) const
+bool StarField::Star::shouldRemove(Vec2i size) const
 {
 	return p.x < 0 || p.x >= size.x ||
 			p.y < 0 || p.y >= size.y;
