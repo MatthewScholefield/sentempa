@@ -24,9 +24,8 @@
 int main()
 {
 	SdlManager::init();
-
-	const auto size = SdlManager::getSize();
-	Renderer renderer(SdlManager::getSdlRenderer(), size.x, size.y);
+	
+	Renderer renderer(SdlManager::getSdlRenderer(), SdlManager::getSize());
 	auto whenResize = [&](int sx, int sy)
 	{
 		renderer.resize(sx, sy);

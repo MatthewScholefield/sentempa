@@ -19,6 +19,7 @@
 
 #include <vector>
 #include <SDL2/SDL_render.h>
+#include "Vec.hpp"
 
 enum class Shape
 {
@@ -28,7 +29,7 @@ enum class Shape
 class Renderer
 {
 public:
-	Renderer(SDL_Renderer *sdlRenderer, int sx, int sy);
+	Renderer(SDL_Renderer *sdlRenderer, const Vec2i &size);
 	void setColor(int r, int g, int b, int a = 255);
 	void clear(int r = 0, int g = 0, int b = 0, int a = 255);
 
@@ -51,5 +52,5 @@ private:
 
 	std::vector<SDL_Point> points;
 	SDL_Renderer *sdlRenderer;
-	int sx, sy;
+	Vec2i size;
 };

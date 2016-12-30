@@ -18,8 +18,8 @@
 #include <SDL2/SDL_render.h>
 #include "Renderer.hpp"
 
-Renderer::Renderer(SDL_Renderer *sdlRenderer, int sx, int sy) :
-sdlRenderer(sdlRenderer), sx(sx), sy(sy) { }
+Renderer::Renderer(SDL_Renderer *sdlRenderer, const Vec2i &size) :
+sdlRenderer(sdlRenderer), size(size) { }
 
 void Renderer::setColor(int r, int g, int b, int a)
 {
@@ -65,18 +65,17 @@ void Renderer::draw()
 
 void Renderer::resize(int sx, int sy)
 {
-	this->sx = sx;
-	this->sy = sy;
+	size = {sx, sy};
 }
 
 int Renderer::getSX()
 {
-	return sx;
+	return size.x;
 }
 
 int Renderer::getSY()
 {
-	return sy;
+	return size.y;
 }
 
 Renderer::RenderShapesFunc Renderer::getShapesFunc(Shape shape)
