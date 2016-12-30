@@ -65,7 +65,7 @@ void StarField::render(Renderer &renderer, Camera &camera) const
 		const Vec2f pt = (Vec2f({ax, ay}) / camera.getFov() + 0.5f) * size;
 		const int alpha = 255.f * std::min(1.f, 1.f * (1.f - (i.p.z - camera.p.z) / maxDepth));
 		int r = 255, g = 255, b = 255;
-		const int twinkle = rand() % 501 - 250;
+		const int twinkle = rand() % 301 - 150;
 		if (twinkle > 0)
 		{
 			r -= twinkle;
