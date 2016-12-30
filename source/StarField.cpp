@@ -21,6 +21,23 @@
 #include "Renderer.hpp"
 #include "Camera.hpp"
 
+void StarField::populate(Vec2i size, Camera& camera, bool randZ)
+{
+	const Vec2f &fov = camera.getFov();
+	int spawnSx = 2 * maxDepth * tan(fov.x / 2);
+	int spawnSy = 2 * maxDepth * tan(fov.y / 2);
+	for (int i = 0; i < stars.size() - maxStars; ++i)
+	{
+		const float x = rand() % spawnSx - spawnSx / 2.f;
+		const float y = rand() % spawnSy - spawnSy / 2.f;
+		const float z = randZ ? rand() % maxDepth : maxDepth + camera.pos.z;
+
+		stars.push_back({
+			{x, y, z}
+		});
+	}
+}
+
 void StarField::update(float dt, Vec2i size, Camera &camera)
 {
 	camera.pos.z += 100.f * dt;
@@ -34,40 +51,26 @@ void StarField::update(float dt, Vec2i size, Camera &camera)
 	stars.erase(std::remove_if(stars.begin(), stars.end(), shouldRemove),
 				stars.end());
 
-	for (int i = 0; i < stars.size() - maxStars; ++i)
-	{
-		const float x = rand() % size.x - size.x/2;
-		const float y = rand() % size.y - size.y/2;
-		const float z = rand() % maxDepth + camera.pos.z;
-
-		stars.push_back({
-			{x, y, z}
-		});
-	}
+	populate(size, camera, stars.size() == 0);
 }
 
 void StarField::render(Renderer &renderer, Camera &camera) const
 {
-	renderer.setColor(255, 255, 255);
-	renderer.beginPoints();
+	const Vec2f size(renderer.getSize().cast<float>());
+	for (const Star &i : stars)
 	{
-		for (const Star &i : stars)
-		{
-			float angleHoriz = atan2(i.p.x - camera.pos.x, i.p.z - camera.pos.z);
-			float renderPx = (angleHoriz / camera.fov + 0.5f) * renderer.getSX();
-			
-			float angleVert = atan2(i.p.y - camera.pos.y, i.p.z - camera.pos.z);
-			float renderPy = (angleVert / camera.fov + 0.5f) * renderer.getSY();
-			
-			renderer.addPoint(renderPx, renderPy);
-		}
+		const float dz = i.p.z - camera.pos.z;
+		const float ax = atan2(i.p.x - camera.pos.x, dz);
+		const float ay = atan2(i.p.y - camera.pos.y, dz);
+
+		const Vec2f pt = (Vec2f({ax, ay}) / camera.getFov() + 0.5f) * size;
+		const int alpha = 255.f * std::min(1.f, 1.f * (1.f - (i.p.z - camera.pos.z) / maxDepth));
+		renderer.setColor(255, 255, 255, alpha);
+		renderer.drawSinglePoint(pt.x, pt.y);
 	}
-	renderer.endPoints(Shape::POINTS);
 }
 
-void StarField::Star::update(float dt)
-{
-}
+void StarField::Star::update(float dt) { }
 
 bool StarField::Star::shouldRemove(Vec2i size) const
 {

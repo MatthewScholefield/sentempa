@@ -78,6 +78,11 @@ int Renderer::getSY()
 	return size.y;
 }
 
+const Vec2i &Renderer::getSize()
+{
+	return size;
+}
+
 Renderer::RenderShapesFunc Renderer::getShapesFunc(Shape shape)
 {
 	switch (shape)

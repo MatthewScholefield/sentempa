@@ -44,6 +44,7 @@ public:
 	void resize(int sx, int sy);
 	int getSX();
 	int getSY();
+	const Vec2i &getSize();
 
 private:
 	using RenderShapesFunc = int (*)(SDL_Renderer*, const SDL_Point *points, int count);

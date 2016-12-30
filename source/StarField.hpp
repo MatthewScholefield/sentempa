@@ -27,11 +27,12 @@ class Camera;
 class StarField
 {
 public:
+	void populate(Vec2i size, Camera &camera, bool randZ);
 	void update(float dt, Vec2i size, Camera &camera);
 	void render(Renderer &renderer, Camera &camera) const;
 
 private:
-	static constexpr int maxStars = 1000, maxDepth = 1000;
+	static constexpr int maxStars = 20000, maxDepth = 1000;
 
 	class Star
 	{

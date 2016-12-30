@@ -23,6 +23,13 @@
 class Camera
 {
 public:
-	float fov = toRad(100.f);
+	Camera(const Vec2i &size);
+	void resize(int sx, int sy);
+	void recalcFov(int sx, int sy);
+	static constexpr float maxFov = toRad(100.f);
 	Vec3f pos = {0.f, 0.f, 0.f};
+	const Vec2f &getFov();
+	
+private:
+	Vec2f fov;
 };

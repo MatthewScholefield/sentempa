@@ -17,3 +17,31 @@
 
 #include "Camera.hpp"
 
+Camera::Camera(const Vec2i &size)
+{
+	recalcFov(size.x, size.y);
+}
+
+void Camera::resize(int sx, int sy)
+{
+	recalcFov(sx, sy);
+}
+
+void Camera::recalcFov(int sx, int sy)
+{
+	if (sx > sy)
+	{
+		fov.x = maxFov;
+		fov.y = fov.x * sy / sx;
+	}
+	else
+	{
+		fov.y = maxFov;
+		fov.x = fov.y * sx / sy;
+	}
+}
+
+const Vec2f& Camera::getFov()
+{
+	return fov;
+}

@@ -21,7 +21,7 @@
 
 constexpr float pi()
 {
-	return std::atan(1)*4;
+	return 3.14159265358979;
 }
 
 constexpr float toRad(const float angle)
