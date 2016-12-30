@@ -17,6 +17,23 @@
 
 #pragma once
 
+#include <cmath>
+
+constexpr float pi()
+{
+	return std::atan(1)*4;
+}
+
+constexpr float toRad(const float angle)
+{
+	return angle * pi() / 180.f;
+}
+
+constexpr float toDeg(const float angle)
+{
+	return angle * 180.f / pi();
+}
+
 namespace Utility
 {
 	void sleep(long ms);

@@ -17,28 +17,12 @@
 
 #pragma once
 
-#include <vector>
-
+#include "Utility.hpp"
 #include "Vec.hpp"
 
-class Renderer;
-class Camera;
-
-class StarField
+class Camera
 {
 public:
-	void update(float dt, Vec2i size, Camera &camera);
-	void render(Renderer &renderer, Camera &camera) const;
-
-private:
-	static constexpr int maxStars = 1000, maxDepth = 1000;
-
-	class Star
-	{
-	public:
-		void update(float dt);
-		bool shouldRemove(Vec2i size) const;
-		Vec3f p;
-	};
-	std::vector<Star> stars;
+	float fov = toRad(100.f);
+	Vec3f pos = {0.f, 0.f, 0.f};
 };

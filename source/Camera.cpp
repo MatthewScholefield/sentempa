@@ -15,30 +15,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "Camera.hpp"
 
-#include <vector>
-
-#include "Vec.hpp"
-
-class Renderer;
-class Camera;
-
-class StarField
-{
-public:
-	void update(float dt, Vec2i size, Camera &camera);
-	void render(Renderer &renderer, Camera &camera) const;
-
-private:
-	static constexpr int maxStars = 1000, maxDepth = 1000;
-
-	class Star
-	{
-	public:
-		void update(float dt);
-		bool shouldRemove(Vec2i size) const;
-		Vec3f p;
-	};
-	std::vector<Star> stars;
-};

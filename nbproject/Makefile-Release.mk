@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/source/Camera.o \
 	${OBJECTDIR}/source/Renderer.o \
 	${OBJECTDIR}/source/SdlManager.o \
 	${OBJECTDIR}/source/StarField.o \
@@ -65,6 +66,11 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sentempa: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sentempa ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/source/Camera.o: source/Camera.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Camera.o source/Camera.cpp
 
 ${OBJECTDIR}/source/Renderer.o: source/Renderer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source

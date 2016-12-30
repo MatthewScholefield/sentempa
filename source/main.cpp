@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "Camera.hpp"
 #include "SdlManager.hpp"
 #include "Renderer.hpp"
 #include "Utility.hpp"
@@ -27,16 +28,17 @@ int main()
 	Renderer renderer(SdlManager::getSdlRenderer(), size.x, size.y);
 	StarField starField;
 	Utility::startTimer();
+	Camera camera;
 
 	while (!SdlManager::shouldQuit())
 	{
 		float dt = Utility::restartTimer();
 		SdlManager::update();
-		starField.update(dt, SdlManager::getSize());
-		
+		starField.update(dt, SdlManager::getSize(), camera);
+
 		renderer.clear(0, 0, 0);
 		{
-			starField.render(renderer);
+			starField.render(renderer, camera);
 		}
 		renderer.draw();
 		Utility::sleep(1);
