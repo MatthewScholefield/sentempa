@@ -35,6 +35,7 @@ public:
 
 	void drawSingleLine(int x1, int y1, int x2, int y2);
 	void drawSinglePoint(int x, int y);
+	void drawSingleFillRect(int x, int y, int w, int h);
 
 	void beginPoints();
 	void addPoint(int x, int y);

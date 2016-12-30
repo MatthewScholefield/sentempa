@@ -42,6 +42,12 @@ void Renderer::drawSinglePoint(int x, int y)
 	SDL_RenderDrawPoint(sdlRenderer, x, y);
 }
 
+void Renderer::drawSingleFillRect(int x, int y, int w, int h)
+{
+	SDL_Rect rect{x, y, w, h};
+	SDL_RenderFillRect(sdlRenderer,&rect);
+}
+
 void Renderer::beginPoints()
 {
 	points.clear();

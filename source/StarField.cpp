@@ -76,8 +76,10 @@ void StarField::render(Renderer &renderer, Camera &camera) const
 			g += twinkle / 2;
 			b += twinkle;
 		}
-		renderer.setColor(r,g,b, alpha);
-		renderer.drawSinglePoint(pt.x, pt.y);
+		renderer.setColor(r, g, b, alpha);
+		const float dist = i.p.dist(camera.pos);
+		const int size = std::max(1.f, 800.f/dist);
+		renderer.drawSingleFillRect(pt.x, pt.y, size, size);
 	}
 }
 
