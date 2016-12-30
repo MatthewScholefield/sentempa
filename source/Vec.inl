@@ -21,7 +21,7 @@
 #define _TYPE_VEC_2 Vec2<T>
 #define _TYPE_VEC_3 Vec3<T>
 
-#define _OP_UNIT(OP, TN, Z) TN operator OP(){TN r(*this);r.x=OP x;r.y=OP y;Z;return r;}
+#define _OP_UNIT(OP, TN, Z) TN operator OP()const{TN r(*this);r.x=OP x;r.y=OP y;Z;return r;}
 #define _OP_UNIT_Z_2(OP)
 #define _OP_UNIT_Z_3(OP) r.z=OP z
 #define OP_UNIT(OP, N) _OP_UNIT(OP,_TYPE_VEC_##N,_OP_UNIT_Z_##N(OP))
@@ -33,7 +33,7 @@
 #define _OP_REF_Z2_3(OP) z OP o
 #define OP_REF(OP, N) _OP_REF(OP,_TYPE_VEC_##N,_OP_REF_Z1_##N(OP),_OP_REF_Z2_##N(OP))
 
-#define _OP_RVAL(OP, TN) TN operator OP(const TN&o){TN r(o);r OP##= *this;return r;}TN operator OP(const T o){TN r(*this);r OP##=o;return r;}
+#define _OP_RVAL(OP, TN) TN operator OP(const TN&o)const{TN r(o);r OP##= *this;return r;}TN operator OP(const T o)const{TN r(*this);r OP##=o;return r;}
 #define OP_RVAL(OP, N) _OP_RVAL(OP,_TYPE_VEC_##N)
 
 #define OP_ARITH(OP, N) OP_REF(OP##=,N)OP_RVAL(OP,N)
@@ -52,7 +52,7 @@ OP_ARITH(&, N) \
 OP_ARITH(^, N) \
 OP_ARITH(|, N)
 
-#define CAST_FN(TS,Z) template<typename U>TS<U>cast(){TS<U>r;r.x=(U)x;r.y=(U)y;Z;return r;}
+#define CAST_FN(TS,Z) template<typename U>TS<U>cast()const{TS<U>r;r.x=(U)x;r.y=(U)y;Z;return r;}
 
 #define CAST_FN_2 CAST_FN(Vec2,)
 #define CAST_FN_3 CAST_FN(Vec3, r.z=(U)z)
