@@ -25,6 +25,7 @@ class Vec2
 public:
 	CREATE_ALL_OPERATORS(2);
 	CREATE_CAST_FN(2);
+	CREATE_CONSTRUCTOR(2);
 	
 	T x, y;
 };
@@ -35,6 +36,7 @@ class Vec3
 public:
 	CREATE_ALL_OPERATORS(3);
 	CREATE_CAST_FN(3);
+	CREATE_CONSTRUCTOR(3);
 	
 	T x, y, z;
 };

@@ -52,9 +52,17 @@ OP_ARITH(&, N) \
 OP_ARITH(^, N) \
 OP_ARITH(|, N)
 
-#define CAST_FN(TS,Z) template<typename U>TS<U>cast()const{TS<U>r;r.x=(U)x;r.y=(U)y;Z;return r;}
+#define CAST_FN(TS,Z) template<typename U>TS<U>cast()const{TS<U>r((U)x,(U)y Z);return r;}
 
+#define COMMA ,
 #define CAST_FN_2 CAST_FN(Vec2,)
-#define CAST_FN_3 CAST_FN(Vec3, r.z=(U)z)
+#define CAST_FN_3 CAST_FN(Vec3,COMMA(U)z)
 
 #define CREATE_CAST_FN(N) CAST_FN_##N
+
+#define _CONSTRUCTOR(TN, Z1, Z2) TN(const T x,const T y Z1):x(x),y(y)Z2{}
+#define _CONSTRUCTOR_Z1_2
+#define _CONSTRUCTOR_Z2_2
+#define _CONSTRUCTOR_Z1_3 ,const T z
+#define _CONSTRUCTOR_Z2_3 ,z(z)
+#define CREATE_CONSTRUCTOR(N) _CONSTRUCTOR(_TYPE_VEC_##N,_CONSTRUCTOR_Z1_##N,_CONSTRUCTOR_Z2_##N)
