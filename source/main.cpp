@@ -24,8 +24,15 @@
 int main()
 {
 	SdlManager::init();
+
 	const auto size = SdlManager::getSize();
 	Renderer renderer(SdlManager::getSdlRenderer(), size.x, size.y);
+	auto whenResize = [&](int sx, int sy)
+	{
+		renderer.resize(sx, sy);
+	};
+	SdlManager::onResize(whenResize);
+
 	StarField starField;
 	Utility::startTimer();
 	Camera camera;
