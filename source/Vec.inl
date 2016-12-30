@@ -33,7 +33,7 @@
 #define _OP_REF_Z2_3(OP) z OP o
 #define OP_REF(OP, N) _OP_REF(OP,_TYPE_VEC_##N,_OP_REF_Z1_##N(OP),_OP_REF_Z2_##N(OP))
 
-#define _OP_RVAL(OP, TN) TN operator OP(const TN&o)const{TN r(o);r OP##= *this;return r;}TN operator OP(const T o)const{TN r(*this);r OP##=o;return r;}
+#define _OP_RVAL(OP, TN) TN operator OP(const TN&o)const{TN r(*this);r OP##=o;return r;}TN operator OP(const T o)const{TN r(*this);r OP##=o;return r;}
 #define OP_RVAL(OP, N) _OP_RVAL(OP,_TYPE_VEC_##N)
 
 #define OP_ARITH(OP, N) OP_REF(OP##=,N)OP_RVAL(OP,N)
