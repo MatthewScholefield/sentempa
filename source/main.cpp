@@ -35,26 +35,26 @@ int main()
 	SdlManager::onResize(whenResize);
 	auto onKeyDown = [&](SDL_Keycode key, bool keyDown)
 	{
-		const float speed = keyDown? 100.f : 0.f;
+		const float acc = keyDown ? 200.f : 0.f;
 		switch(key)
 		{
 		case SDLK_w:
-			camera.vel.y = -speed;
+			camera.a.y = -acc;
 			break;
 		case SDLK_s:
-			camera.vel.y = speed;
+			camera.a.y = acc;
 			break;
 		case SDLK_d:
-			camera.vel.x = speed;
+			camera.a.x = acc;
 			break;
 		case SDLK_a:
-			camera.vel.x = -speed;
+			camera.a.x = -acc;
 			break;
 		case SDLK_UP:
-			camera.vel.z = speed;
+			camera.a.z = acc;
 			break;
 		case SDLK_DOWN:
-			camera.vel.z = -speed;
+			camera.a.z = -acc;
 			break;
 		default:
 			break;

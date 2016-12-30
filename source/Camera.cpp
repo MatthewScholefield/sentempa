@@ -43,7 +43,9 @@ void Camera::recalcFov(int sx, int sy)
 
 void Camera::update(float dt)
 {
-	pos += vel * dt;
+	v *= friction;
+	v += a * dt;
+	p += v * dt;
 }
 
 const Vec2f& Camera::getFov()

@@ -30,8 +30,11 @@ public:
 	const Vec2f &getFov();
 	
 	static constexpr float maxFov = toRad(100.f);
-	Vec3f pos = {0.f, 0.f, 0.f};
-	Vec3f vel = {0.f, 0.f, 0.f};
+	static constexpr float friction = 0.99f;
+	
+	Vec3f p =  {0.f, 0.f, 0.f}; // Position
+	Vec3f v = {0.f, 0.f, 0.f}; // Velocity
+	Vec3f a = {0.f, 0.f, 0.f}; // Acceleration
 	
 private:
 	Vec2f fov;
