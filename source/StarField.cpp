@@ -64,7 +64,19 @@ void StarField::render(Renderer &renderer, Camera &camera) const
 
 		const Vec2f pt = (Vec2f({ax, ay}) / camera.getFov() + 0.5f) * size;
 		const int alpha = 255.f * std::min(1.f, 1.f * (1.f - (i.p.z - camera.pos.z) / maxDepth));
-		renderer.setColor(255, 255, 255, alpha);
+		int r = 255, g = 255, b = 255;
+		const int twinkle = rand() % 501 - 250;
+		if (twinkle > 0)
+		{
+			r -= twinkle;
+			g -= twinkle;
+		}
+		else
+		{
+			g += twinkle / 2;
+			b += twinkle;
+		}
+		renderer.setColor(r,g,b, alpha);
 		renderer.drawSinglePoint(pt.x, pt.y);
 	}
 }
