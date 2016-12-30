@@ -26,7 +26,7 @@ class SdlManager
 {
 	SdlManager() = delete;
 public:
-	using KeyDownFunc = std::function<void(SDL_Keycode)>;
+	using KeyChangeFunc = std::function<void(SDL_Keycode, bool keyDown)>;
 	using ResizeFunc = std::function<void(int, int) >;
 
 	static void init();
@@ -35,7 +35,7 @@ public:
 	static SDL_Renderer *getSdlRenderer();
 	static void update();
 	static bool shouldQuit();
-	static void onKeyDown(KeyDownFunc func);
+	static void onKeyChange(KeyChangeFunc func);
 	static void onResize(ResizeFunc func);
 
 private:
@@ -43,7 +43,7 @@ private:
 	static const int screenHeight = 480;
 
 	static bool mustQuit;
-	static std::vector<KeyDownFunc> keyDownFuncs;
+	static std::vector<KeyChangeFunc> keyChangeFuncs;
 	static std::vector<ResizeFunc> resizeFuncs;
 
 	static SDL_Window *window;

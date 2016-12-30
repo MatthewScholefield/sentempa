@@ -19,7 +19,7 @@
 #include "Vec.hpp"
 
 bool SdlManager::mustQuit = false;
-std::vector<SdlManager::KeyDownFunc> SdlManager::keyDownFuncs;
+std::vector<SdlManager::KeyChangeFunc> SdlManager::keyChangeFuncs;
 std::vector<SdlManager::ResizeFunc> SdlManager::resizeFuncs;
 
 SDL_Window *SdlManager::window = nullptr;
@@ -74,8 +74,12 @@ void SdlManager::update()
 			mustQuit = true;
 			break;
 		case SDL_KEYDOWN:
-			for (auto &keyDownFunc : keyDownFuncs)
-				keyDownFunc(event.key.keysym.sym);
+			for (auto &keyDownFunc : keyChangeFuncs)
+				keyDownFunc(event.key.keysym.sym, true);
+			break;
+		case SDL_KEYUP:
+			for (auto &keyDownFunc : keyChangeFuncs)
+				keyDownFunc(event.key.keysym.sym, false);
 			break;
 		case SDL_WINDOWEVENT:
 			if (event.window.event == SDL_WINDOWEVENT_RESIZED)
@@ -92,9 +96,9 @@ bool SdlManager::shouldQuit()
 	return mustQuit;
 }
 
-void SdlManager::onKeyDown(KeyDownFunc func)
+void SdlManager::onKeyChange(KeyChangeFunc func)
 {
-	keyDownFuncs.push_back(func);
+	keyChangeFuncs.push_back(func);
 }
 
 void SdlManager::onResize(ResizeFunc func)

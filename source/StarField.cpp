@@ -40,7 +40,6 @@ void StarField::populate(Vec2i size, Camera& camera, bool randZ)
 
 void StarField::update(float dt, Vec2i size, Camera &camera)
 {
-	camera.pos.z += 100.f * dt;
 	for (Star &i : stars)
 		i.update(dt);
 

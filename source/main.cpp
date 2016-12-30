@@ -33,6 +33,34 @@ int main()
 		camera.resize(sx, sy);
 	};
 	SdlManager::onResize(whenResize);
+	auto onKeyDown = [&](SDL_Keycode key, bool keyDown)
+	{
+		const float speed = keyDown? 100.f : 0.f;
+		switch(key)
+		{
+		case SDLK_w:
+			camera.vel.y = -speed;
+			break;
+		case SDLK_s:
+			camera.vel.y = speed;
+			break;
+		case SDLK_d:
+			camera.vel.x = speed;
+			break;
+		case SDLK_a:
+			camera.vel.x = -speed;
+			break;
+		case SDLK_UP:
+			camera.vel.z = speed;
+			break;
+		case SDLK_DOWN:
+			camera.vel.z = -speed;
+			break;
+		default:
+			break;
+		}
+	};
+	SdlManager::onKeyChange(onKeyDown);
 
 	StarField starField;
 	Utility::startTimer();
@@ -42,6 +70,7 @@ int main()
 		float dt = Utility::restartTimer();
 		SdlManager::update();
 		starField.update(dt, SdlManager::getSize(), camera);
+		camera.update(dt);
 
 		renderer.clear(0, 0, 0);
 		{

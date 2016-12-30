@@ -26,9 +26,12 @@ public:
 	Camera(const Vec2i &size);
 	void resize(int sx, int sy);
 	void recalcFov(int sx, int sy);
+	void update(float dt);
+	const Vec2f &getFov();
+	
 	static constexpr float maxFov = toRad(100.f);
 	Vec3f pos = {0.f, 0.f, 0.f};
-	const Vec2f &getFov();
+	Vec3f vel = {0.f, 0.f, 0.f};
 	
 private:
 	Vec2f fov;
