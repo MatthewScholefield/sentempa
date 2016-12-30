@@ -17,15 +17,17 @@
 
 #pragma once
 
+#include <cmath>
 #include "Vec.inl"
 
 template<typename T>
 class Vec2
 {
 public:
+	CREATE_CONSTRUCTORS(2);
 	CREATE_ALL_OPERATORS(2);
 	CREATE_CAST_FN(2);
-	CREATE_CONSTRUCTORS(2);
+	CREATE_DIST_FNS(2);
 	
 	T x, y;
 };
@@ -35,8 +37,9 @@ class Vec3
 {
 public:
 	CREATE_ALL_OPERATORS(3);
-	CREATE_CAST_FN(3);
 	CREATE_CONSTRUCTORS(3);
+	CREATE_CAST_FN(3);
+	CREATE_DIST_FNS(3);
 	
 	T x, y, z;
 };

@@ -66,3 +66,8 @@ OP_ARITH(|, N)
 #define _CONSTRUCTORS_Z1_3 ,const T z
 #define _CONSTRUCTORS_Z2_3 ,z(z)
 #define CREATE_CONSTRUCTORS(N) _CONSTRUCTORS(_TYPE_VEC_##N,_CONSTRUCTORS_Z1_##N,_CONSTRUCTORS_Z2_##N)
+
+#define _DIST_FNS(TN, Z) T dist2(const TN&o)const{return(x-o.x)*(x-o.x)+(y-o.y)*(y-o.y)Z;}T dist(const TN&o)const{return std::sqrt(dist2(o));}
+#define _DIST_FNS_Z_2
+#define _DIST_FNS_Z_3 +(z-o.z)*(z-o.z);
+#define CREATE_DIST_FNS(N) _DIST_FNS(_TYPE_VEC_##N, _DIST_FNS_Z_##N)
