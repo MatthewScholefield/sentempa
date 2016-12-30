@@ -78,7 +78,7 @@ void StarField::render(Renderer &renderer, Camera &camera) const
 		}
 		renderer.setColor(r, g, b, alpha);
 		const float dist = i.p.dist(camera.p);
-		const int size = std::max(1.f, 800.f/dist);
+		const int size = std::max(1.f, starSize/dist);
 		renderer.drawSingleFillRect(pt.x, pt.y, size, size);
 	}
 }

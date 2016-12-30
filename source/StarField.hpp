@@ -33,6 +33,7 @@ public:
 
 private:
 	static constexpr int maxStars = 20000, maxDepth = 1000;
+	static constexpr float starSize = 800.f;
 
 	class Star
 	{
