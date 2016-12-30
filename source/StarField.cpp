@@ -44,7 +44,7 @@ void StarField::update(float dt, Vec2i size)
 	}
 }
 
-void StarField::render(Renderer &renderer)
+void StarField::render(Renderer &renderer) const
 {
 	renderer.setColor(255, 255, 255);
 	renderer.beginPoints();

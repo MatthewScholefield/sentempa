@@ -27,7 +27,7 @@ class StarField
 {
 public:
 	void update(float dt, Vec2i size);
-	void render(Renderer &renderer);
+	void render(Renderer &renderer) const;
 
 private:
 	static constexpr int maxStars = 1000;
