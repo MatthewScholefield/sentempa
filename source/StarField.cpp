@@ -28,8 +28,8 @@ void StarField::populate(Vec2i size, Camera& camera, bool randZ)
 	int spawnSy = 2 * maxDepth * tan(fov.y / 2);
 	for (int i = 0; i < stars.size() - maxStars; ++i)
 	{
-		const float x = rand() % spawnSx - spawnSx / 2.f;
-		const float y = rand() % spawnSy - spawnSy / 2.f;
+		const float x = rand() % spawnSx - spawnSx / 2.f + camera.p.x;
+		const float y = rand() % spawnSy - spawnSy / 2.f + camera.p.y;
 		const float z = randZ ? rand() % maxDepth : maxDepth + camera.p.z;
 
 		stars.push_back({
