@@ -60,9 +60,9 @@ OP_ARITH(|, N)
 
 #define CREATE_CAST_FN(N) CAST_FN_##N
 
-#define _CONSTRUCTOR(TN, Z1, Z2) TN(const T x,const T y Z1):x(x),y(y)Z2{}
-#define _CONSTRUCTOR_Z1_2
-#define _CONSTRUCTOR_Z2_2
-#define _CONSTRUCTOR_Z1_3 ,const T z
-#define _CONSTRUCTOR_Z2_3 ,z(z)
-#define CREATE_CONSTRUCTOR(N) _CONSTRUCTOR(_TYPE_VEC_##N,_CONSTRUCTOR_Z1_##N,_CONSTRUCTOR_Z2_##N)
+#define _CONSTRUCTORS(TN, Z1, Z2) TN(const T x,const T y Z1):x(x),y(y)Z2{}TN()=default;
+#define _CONSTRUCTORS_Z1_2
+#define _CONSTRUCTORS_Z2_2
+#define _CONSTRUCTORS_Z1_3 ,const T z
+#define _CONSTRUCTORS_Z2_3 ,z(z)
+#define CREATE_CONSTRUCTORS(N) _CONSTRUCTORS(_TYPE_VEC_##N,_CONSTRUCTORS_Z1_##N,_CONSTRUCTORS_Z2_##N)
