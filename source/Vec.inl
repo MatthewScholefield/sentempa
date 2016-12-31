@@ -17,6 +17,9 @@
 
 #pragma once
 
+#include <cmath>
+#include <algorithm>
+
 // TODO: Lighten up on the macro hackery
 #define _TYPE_VEC_2 Vec2<T>
 #define _TYPE_VEC_3 Vec3<T>
@@ -76,3 +79,15 @@ OP_ARITH(|, N)
 #define _VOLUME_FN_Z_2
 #define _VOLUME_FN_Z_3 *z
 #define CREATE_VOLUME_FN(N) _VOLUME_FN(_VOLUME_FN_Z_##N)
+
+#define _ABS_FN(TN, Z) TN abs()const{return{std::abs(x),std::abs(y)Z};}
+#define _ABS_FN_Z_2
+#define _ABS_FN_Z_3 ,std::abs(z)
+#define CREATE_ABS_FN(N) _ABS_FN(_TYPE_VEC_##N, _ABS_FN_Z_##N)
+
+#define _MIN_MAX_FN(Z1, Z2) T min()const{return std::min(x,Z1);}T max()const{return std::max(x,Z2);}
+#define _MIN_MAX_FN_Z1_2 y
+#define _MIN_MAX_FN_Z2_2 y
+#define _MIN_MAX_FN_Z1_3 std::min(y,z)
+#define _MIN_MAX_FN_Z2_3 std::max(y,z)
+#define CREATE_MIN_MAX_FN(N) _MIN_MAX_FN(_MIN_MAX_FN_Z1_##N, _MIN_MAX_FN_Z2_##N)
