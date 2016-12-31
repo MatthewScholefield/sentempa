@@ -63,12 +63,14 @@ OP_ARITH(|, N)
 
 #define CREATE_CAST_FN(N) CAST_FN_##N
 
-#define _CONSTRUCTORS(TN, Z1, Z2) TN(const T x,const T y Z1):x(x),y(y)Z2{}TN()=default;
+#define _CONSTRUCTORS(TN, Z1, Z2, Z3) TN(const T x,const T y Z1):x(x),y(y)Z2{}TN():x(0),y(0)Z3{}
 #define _CONSTRUCTORS_Z1_2
 #define _CONSTRUCTORS_Z2_2
+#define _CONSTRUCTORS_Z3_2
 #define _CONSTRUCTORS_Z1_3 ,const T z
 #define _CONSTRUCTORS_Z2_3 ,z(z)
-#define CREATE_CONSTRUCTORS(N) _CONSTRUCTORS(_TYPE_VEC_##N,_CONSTRUCTORS_Z1_##N,_CONSTRUCTORS_Z2_##N)
+#define _CONSTRUCTORS_Z3_3 ,z(0)
+#define CREATE_CONSTRUCTORS(N) _CONSTRUCTORS(_TYPE_VEC_##N,_CONSTRUCTORS_Z1_##N,_CONSTRUCTORS_Z2_##N,_CONSTRUCTORS_Z3_##N)
 
 #define _DIST_FNS(TN, Z) T dist2(const TN&o)const{return(x-o.x)*(x-o.x)+(y-o.y)*(y-o.y)Z;}T dist(const TN&o)const{return std::sqrt(dist2(o));}
 #define _DIST_FNS_Z_2
