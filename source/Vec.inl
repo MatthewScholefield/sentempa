@@ -71,3 +71,8 @@ OP_ARITH(|, N)
 #define _DIST_FNS_Z_2
 #define _DIST_FNS_Z_3 +(z-o.z)*(z-o.z);
 #define CREATE_DIST_FNS(N) _DIST_FNS(_TYPE_VEC_##N, _DIST_FNS_Z_##N)
+
+#define _VOLUME_FN(Z) T volume()const{return std::abs(x*y Z);}
+#define _VOLUME_FN_Z_2
+#define _VOLUME_FN_Z_3 *z
+#define CREATE_VOLUME_FN(N) _VOLUME_FN(_VOLUME_FN_Z_##N)

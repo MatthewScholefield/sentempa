@@ -28,6 +28,7 @@ public:
 	CREATE_ALL_OPERATORS(2);
 	CREATE_CAST_FN(2);
 	CREATE_DIST_FNS(2);
+	CREATE_VOLUME_FN(2);
 	
 	T x, y;
 };
@@ -40,6 +41,7 @@ public:
 	CREATE_CONSTRUCTORS(3);
 	CREATE_CAST_FN(3);
 	CREATE_DIST_FNS(3);
+	CREATE_VOLUME_FN(3);
 	
 	T x, y, z;
 };
