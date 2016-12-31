@@ -30,6 +30,7 @@ public:
 	CREATE_VOLUME_FN(2);
 	CREATE_ABS_FN(2);
 	CREATE_MIN_MAX_FN(2);
+	CREATE_RAND_FN(2);
 	
 	T x, y;
 };
@@ -45,6 +46,7 @@ public:
 	CREATE_VOLUME_FN(3);
 	CREATE_ABS_FN(3);
 	CREATE_MIN_MAX_FN(3);
+	CREATE_RAND_FN(3);
 	
 	T x, y, z;
 };
