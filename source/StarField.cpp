@@ -15,42 +15,75 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <algorithm>
+#include <memory>
 
 #include "StarField.hpp"
 #include "Renderer.hpp"
 #include "Camera.hpp"
 
-void StarField::populate(Vec2i size, Camera& camera, bool randZ)
+void StarField::refill(Camera &camera)
 {
-	const Vec2f &fov = camera.getFov();
-	int spawnSx = 2 * maxDepth * tan(fov.x / 2);
-	int spawnSy = 2 * maxDepth * tan(fov.y / 2);
-	for (int i = 0; i < stars.size() - maxStars; ++i)
-	{
-		const float x = rand() % spawnSx - spawnSx / 2.f + camera.p.x;
-		const float y = rand() % spawnSy - spawnSy / 2.f + camera.p.y;
-		const float z = randZ ? rand() % maxDepth : maxDepth + camera.p.z;
-
-		stars.push_back({
-			{x, y, z}
-		});
-	}
-}
-
-void StarField::update(float dt, Vec2i size, Camera &camera)
-{
-	for (Star &i : stars)
-		i.update(dt);
-
 	auto shouldRemove = [&camera](const Star & star)
 	{
-		return star.p.z < camera.p.z;
+		return (star.p - camera.p).abs().max() > maxDepth;
 	};
 	stars.erase(std::remove_if(stars.begin(), stars.end(), shouldRemove),
 				stars.end());
 
-	populate(size, camera, stars.size() == 0);
+	float starsToCreate = maxStars - (int) stars.size();
+
+	if (starsToCreate == 0)
+		return;
+
+	Box newBox = {
+		camera.p - maxDepth,
+		{maxDepth * 2, maxDepth * 2, maxDepth * 2}
+	};
+
+	// Delta
+	Vec3f d = newBox.pos - box.pos;
+	Vec3f da = d.abs();
+	Vec3f &s = newBox.size;
+
+	std::array<Box, 3> boxes;
+
+	boxes[0].size = {da.x, s.y, s.z};
+	boxes[1].size = {s.x - da.x, da.y, s.z};
+	boxes[2].size = {s.x - da.x, s.y - da.y, da.z};
+
+	boxes[0].pos = box.pos + (d.x > 0.f ? Vec3f(box.size.x, 0.f, 0.f) : Vec3f(d.x, d.y, d.z));
+	boxes[1].pos = box.pos + (d.y > 0.f ? Vec3f(0.f, box.size.y, 0.f) : Vec3f(0.f, d.y, d.z));
+	boxes[2].pos = box.pos + (d.z > 0.f ? Vec3f(0.f, 0.f, box.size.z) : Vec3f(0.f, 0.f, d.z));
+
+	if (box.size.volume() == 0.f)
+	{
+		boxes[0] = newBox;
+		boxes[1] = boxes[2] = Box();
+	}
+
+	float totalVolume = 0.f;
+	std::array<float, boxes.size() > volumes;
+	for (int i = 0; i < volumes.size(); ++i)
+		totalVolume += (volumes[i] = boxes[i].size.volume());
+
+	for (int i = 0; i < boxes.size(); ++i)
+	{
+		const int numStars = std::round(starsToCreate * volumes[i] / totalVolume);
+		for (int j = 0; j < numStars; ++j)
+		{
+			const auto size = boxes[i].size.cast<int>();
+			stars.push_back({boxes[i].pos + size.max(1).rand().cast<float>()});
+		}
+	}
+	box = newBox;
+}
+
+void StarField::update(float dt, Camera &camera)
+{
+	for (Star &i : stars)
+		i.update(dt);
+
+	refill(camera);
 }
 
 void StarField::render(Renderer &renderer, Camera &camera) const
@@ -78,7 +111,7 @@ void StarField::render(Renderer &renderer, Camera &camera) const
 		}
 		renderer.setColor(r, g, b, alpha);
 		const float dist = i.p.dist(camera.p);
-		const int size = std::max(1.f, starSize/dist);
+		const int size = dist == 0.f ? 0 : std::max(1.f, starSize / dist);
 		renderer.drawSingleFillRect(pt.x, pt.y, size, size);
 	}
 }

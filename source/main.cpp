@@ -69,7 +69,7 @@ int main()
 	{
 		float dt = Utility::restartTimer();
 		SdlManager::update();
-		starField.update(dt, SdlManager::getSize(), camera);
+		starField.update(dt, camera);
 		camera.update(dt);
 
 		renderer.clear(0, 0, 0);

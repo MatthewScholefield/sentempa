@@ -27,8 +27,8 @@ class Camera;
 class StarField
 {
 public:
-	void populate(Vec2i size, Camera &camera, bool randZ);
-	void update(float dt, Vec2i size, Camera &camera);
+	void refill(Camera &camera);
+	void update(float dt, Camera &camera);
 	void render(Renderer &renderer, Camera &camera) const;
 
 private:
@@ -43,4 +43,14 @@ private:
 		Vec3f p;
 	};
 	std::vector<Star> stars;
+
+	class Box
+	{
+	public:
+		Vec3f pos;
+		Vec3f size;
+	};
+	
+	// Area containing all existing stars
+	Box box;
 };
