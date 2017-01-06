@@ -38,6 +38,7 @@ void SdlManager::init()
 							SDL_WINDOW_RESIZABLE);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	if (!window || !renderer)
 		exit(1);
