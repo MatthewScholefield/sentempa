@@ -102,3 +102,8 @@ OP_ARITH(|, N)
 #define _RAND_FN_Z_2
 #define _RAND_FN_Z_3 ,std::rand()%z
 #define CREATE_RAND_FN(N) _RAND_FN(_TYPE_VEC_##N,_RAND_FN_Z_##N)
+
+#define _MAG_FN(Z) T mag()const{return sqrtf(x*x+y*y Z);}
+#define _MAG_FN_Z_2
+#define _MAG_FN_Z_3 +z*z
+#define CREATE_MAG_FN(N) _MAG_FN(_MAG_FN_Z_##N)
