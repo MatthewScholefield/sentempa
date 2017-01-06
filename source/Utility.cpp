@@ -25,7 +25,7 @@ namespace Utility
 	using sec = chr::seconds;
 	using ns = chr::nanoseconds;
 	using getTime = chr::high_resolution_clock;
-	auto start=getTime::now();
+	auto start = getTime::now();
 
 	void sleep(long ms)
 	{
@@ -42,6 +42,6 @@ namespace Utility
 		auto end = getTime::now();
 		auto diff = end - start;
 		start = end;
-		return chr::duration_cast<ns>(diff).count()/(1000*1000*1000.f);
+		return chr::duration_cast<ns>(diff).count() / (1000 * 1000 * 1000.f);
 	}
 }
