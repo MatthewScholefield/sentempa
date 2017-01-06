@@ -28,14 +28,17 @@ public:
 	void recalcFov(int sx, int sy);
 	void update(float dt);
 	const Vec2f &getFov();
-	
-	static constexpr float maxFov = toRad(100.f);
+	const Vec3f &getPos();
+	Vec3f &getAcc();
+	Vec2f &getAngVel();
+	Vec2f projectPoint(const Vec3f &p, const Vec2f &canvasSize);
+
+	static constexpr float maxFov = toRad(70.f);
 	static constexpr float friction = 0.99f;
 	
-	Vec3f p =  {0.f, 0.f, 0.f}; // Position
-	Vec3f v = {0.f, 0.f, 0.f}; // Velocity
-	Vec3f a = {0.f, 0.f, 0.f}; // Acceleration
-	
 private:
+	
+	Vec2f angularPos, angularVel;
+	Vec3f pos, vel, acc;
 	Vec2f fov;
 };

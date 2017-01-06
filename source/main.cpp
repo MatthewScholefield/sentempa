@@ -21,48 +21,73 @@
 #include "Utility.hpp"
 #include "StarField.hpp"
 
+void updateMouse(Camera &camera)
+{
+	int dMouseX, dMouseY;
+	SDL_GetRelativeMouseState(&dMouseX, &dMouseY);
+	auto &ang = camera.getAngVel();
+	ang.x = +0.3f * dMouseX;
+	ang.y = -0.3f * dMouseY;
+}
+
 int main()
 {
 	SdlManager::init();
-	
+
 	Renderer renderer(SdlManager::getSdlRenderer(), SdlManager::getSize());
 	Camera camera(renderer.getSize());
+	StarField starField;
 	auto whenResize = [&](int sx, int sy)
 	{
 		renderer.resize(sx, sy);
 		camera.resize(sx, sy);
 	};
 	SdlManager::onResize(whenResize);
+	
+	Vec2f keyAng;
 	auto onKeyDown = [&](SDL_Keycode key, bool keyDown)
 	{
-		const float acc = keyDown ? 200.f : 0.f;
-		switch(key)
+		auto &acc = camera.getAcc();
+		const float setAcc = keyDown ? 200.f : 0.f;
+		const float setAng = keyDown ? pi() / 2.f : 0.f;
+		switch (key)
 		{
 		case SDLK_w:
-			camera.a.y = -acc;
+			acc.y = -setAcc;
 			break;
 		case SDLK_s:
-			camera.a.y = acc;
+			acc.y = setAcc;
 			break;
 		case SDLK_d:
-			camera.a.x = acc;
+			acc.x = setAcc;
 			break;
 		case SDLK_a:
-			camera.a.x = -acc;
+			acc.x = -setAcc;
+			break;
+		case SDLK_e:
+			acc.z = setAcc;
+			break;
+		case SDLK_q:
+			acc.z = -setAcc;
 			break;
 		case SDLK_UP:
-			camera.a.z = acc;
+			keyAng.y = setAng;
 			break;
 		case SDLK_DOWN:
-			camera.a.z = -acc;
+			keyAng.y = -setAng;
 			break;
+		case SDLK_LEFT:
+			keyAng.x = -setAng;
+			break;
+		case SDLK_RIGHT:
+			keyAng.x = setAng;
+			break;
+
 		default:
 			break;
 		}
 	};
 	SdlManager::onKeyChange(onKeyDown);
-
-	StarField starField;
 	Utility::startTimer();
 
 	while (!SdlManager::shouldQuit())
@@ -70,6 +95,15 @@ int main()
 		float dt = Utility::restartTimer();
 		SdlManager::update();
 		starField.update(dt, camera);
+
+		updateMouse(camera);
+		
+		auto &ang = camera.getAngVel();
+		if (keyAng.x != 0.f)
+			ang.x = keyAng.x;
+		if (keyAng.y != 0.f)
+			ang.y = keyAng.y;
+		
 		camera.update(dt);
 
 		renderer.clear(0, 0, 0);

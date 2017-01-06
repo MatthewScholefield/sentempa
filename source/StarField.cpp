@@ -16,6 +16,7 @@
  */
 
 #include <memory>
+#include <Eigen/Geometry>
 
 #include "StarField.hpp"
 #include "Renderer.hpp"
@@ -25,7 +26,7 @@ void StarField::refill(Camera &camera)
 {
 	auto shouldRemove = [&camera](const Star & star)
 	{
-		return (star.p - camera.p).abs().max() > maxDepth;
+		return (star.p - camera.getPos()).abs().max() > maxDepth;
 	};
 	stars.erase(std::remove_if(stars.begin(), stars.end(), shouldRemove),
 				stars.end());
@@ -36,7 +37,7 @@ void StarField::refill(Camera &camera)
 		return;
 
 	Box newBox = {
-		camera.p - maxDepth,
+		camera.getPos() - maxDepth,
 		{maxDepth * 2, maxDepth * 2, maxDepth * 2}
 	};
 
@@ -69,11 +70,9 @@ void StarField::refill(Camera &camera)
 	for (int i = 0; i < boxes.size(); ++i)
 	{
 		const int numStars = std::round(starsToCreate * volumes[i] / totalVolume);
+		const auto size = boxes[i].size.cast<int>();
 		for (int j = 0; j < numStars; ++j)
-		{
-			const auto size = boxes[i].size.cast<int>();
 			stars.push_back({boxes[i].pos + size.max(1).rand().cast<float>()});
-		}
 	}
 	box = newBox;
 }
@@ -88,15 +87,24 @@ void StarField::update(float dt, Camera &camera)
 
 void StarField::render(Renderer &renderer, Camera &camera) const
 {
-	const Vec2f size(renderer.getSize().cast<float>());
+	const auto canvasSize = renderer.getSize().cast<float>();
 	for (const Star &i : stars)
 	{
-		const float dz = i.p.z - camera.p.z;
-		const float ax = atan2(i.p.x - camera.p.x, dz);
-		const float ay = atan2(i.p.y - camera.p.y, dz);
+		const Vec2f pt = camera.projectPoint(i.p, canvasSize);
+		if (std::isnan(pt.x))
+			continue;
+		
+		const float dist = i.p.dist(camera.getPos());
+		const int squareSize = dist == 0.f ? 0 : std::max(1.f, starSize / dist);
+		
+		if (pt.x + squareSize < 0.f || pt.x >= canvasSize.x ||
+				pt.y + squareSize < 0.f || pt.y >= canvasSize.y)
+			continue;
 
-		const Vec2f pt = (Vec2f({ax, ay}) / camera.getFov() + 0.5f) * size;
-		const int alpha = 255.f * std::min(1.f, 1.f * (1.f - (i.p.z - camera.p.z) / maxDepth));
+		int alpha = 255.f * (1.f - dist / (sqrt(maxDepth * maxDepth)));
+		if (alpha <= 0)
+			continue;
+
 		int r = 255, g = 255, b = 255;
 		const int twinkle = rand() % 301 - 150;
 		if (twinkle > 0)
@@ -109,10 +117,9 @@ void StarField::render(Renderer &renderer, Camera &camera) const
 			g += twinkle / 2;
 			b += twinkle;
 		}
+
 		renderer.setColor(r, g, b, alpha);
-		const float dist = i.p.dist(camera.p);
-		const int size = dist == 0.f ? 0 : std::max(1.f, starSize / dist);
-		renderer.drawSingleFillRect(pt.x, pt.y, size, size);
+		renderer.drawSingleFillRect(pt.x, pt.y, squareSize, squareSize);
 	}
 }
 
