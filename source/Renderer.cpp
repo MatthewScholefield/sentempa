@@ -17,75 +17,95 @@
 
 #include <SDL2/SDL_render.h>
 #include "Renderer.hpp"
+#include "SdlManager.hpp"
 
 Renderer::Renderer(SDL_Renderer *sdlRenderer, const Vec2i &size) :
-sdlRenderer(sdlRenderer), size(size) { }
+sdlRenderer(sdlRenderer), size(size)
+{
+	SdlManager::onResize([this](int sx, int sy)
+	{
+		resize(sx, sy);
+	});
+}
 
 void Renderer::setColor(int r, int g, int b, int a)
 {
+
 	SDL_SetRenderDrawColor(sdlRenderer, r, g, b, a);
 }
 
 void Renderer::clear(int r, int g, int b, int a)
 {
+
 	setColor(r, g, b, a);
 	SDL_RenderClear(sdlRenderer);
 }
 
 void Renderer::drawSingleLine(int x1, int y1, int x2, int y2)
 {
+
 	SDL_RenderDrawLine(sdlRenderer, x1, y1, x2, y2);
 }
 
 void Renderer::drawSinglePoint(int x, int y)
 {
+
 	SDL_RenderDrawPoint(sdlRenderer, x, y);
 }
 
 void Renderer::drawSingleFillRect(int x, int y, int w, int h)
 {
+
 	SDL_Rect rect{x, y, w, h};
-	SDL_RenderFillRect(sdlRenderer,&rect);
+	SDL_RenderFillRect(sdlRenderer, &rect);
 }
 
 void Renderer::beginPoints()
 {
+
 	points.clear();
 }
 
 void Renderer::addPoint(int x, int y)
 {
+
 	points.push_back({x, y});
 }
 
 void Renderer::endPoints(Shape shape)
 {
+
 	auto func = getShapesFunc(shape);
 	func(sdlRenderer, points.data(), points.size());
 }
 
 void Renderer::draw()
 {
+
 	SDL_RenderPresent(sdlRenderer);
 }
 
 void Renderer::resize(int sx, int sy)
 {
+
 	size = {sx, sy};
 }
 
 int Renderer::getSX()
 {
+
 	return size.x;
 }
 
 int Renderer::getSY()
 {
+
 	return size.y;
 }
 
-const Vec2i &Renderer::getSize()
+const Vec2i & Renderer::getSize()
 {
+
 	return size;
 }
 

@@ -16,10 +16,15 @@
  */
 
 #include "Camera.hpp"
+#include "SdlManager.hpp"
 
 Camera::Camera(const Vec2i &size)
 {
 	recalcFov(size.x, size.y);
+	SdlManager::onResize([this](int sx, int sy)
+	{
+		resize(sx, sy);
+	});
 }
 
 void Camera::resize(int sx, int sy)

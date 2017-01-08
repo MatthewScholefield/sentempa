@@ -37,13 +37,7 @@ int main()
 	Renderer renderer(SdlManager::getSdlRenderer(), SdlManager::getSize());
 	Camera camera(renderer.getSize());
 	StarField starField;
-	auto whenResize = [&](int sx, int sy)
-	{
-		renderer.resize(sx, sy);
-		camera.resize(sx, sy);
-	};
-	SdlManager::onResize(whenResize);
-	
+
 	Vec2f keyAng;
 	auto onKeyDown = [&](SDL_Keycode key, bool keyDown)
 	{
@@ -97,13 +91,13 @@ int main()
 		starField.update(dt, camera);
 
 		updateMouse(camera);
-		
+
 		auto &ang = camera.getAngVel();
 		if (keyAng.x != 0.f)
 			ang.x = keyAng.x;
 		if (keyAng.y != 0.f)
 			ang.y = keyAng.y;
-		
+
 		camera.update(dt);
 
 		renderer.clear(0, 0, 0);
