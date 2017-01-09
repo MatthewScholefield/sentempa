@@ -30,9 +30,9 @@ int main()
 	Camera camera(renderer.getSize());
 	StarField starField;
 	InputManager inputManager;
-	
+
 	Utility::startTimer();
-	
+
 	while (!SdlManager::shouldQuit())
 	{
 		float dt = Utility::restartTimer();
@@ -40,7 +40,7 @@ int main()
 		inputManager.update();
 		starField.update(dt, camera);
 		camera.update(dt, inputManager);
-		
+
 
 		renderer.clear(0, 0, 0);
 		{

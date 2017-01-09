@@ -50,7 +50,7 @@ private:
 		Vec3f pos;
 		Vec3f size;
 	};
-	
+
 	// Area containing all existing stars
 	Box box;
 };

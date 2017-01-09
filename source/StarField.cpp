@@ -38,7 +38,9 @@ void StarField::refill(Camera &camera)
 
 	Box newBox = {
 		camera.getPos() - maxDepth,
-		{maxDepth * 2, maxDepth * 2, maxDepth * 2}
+		{
+			maxDepth * 2, maxDepth * 2, maxDepth * 2
+		}
 	};
 
 	// Delta
@@ -93,10 +95,10 @@ void StarField::render(Renderer &renderer, Camera &camera) const
 		const Vec2f pt = camera.projectPoint(i.p, canvasSize);
 		if (std::isnan(pt.x))
 			continue;
-		
+
 		const float dist = i.p.dist(camera.getPos());
 		const int squareSize = dist == 0.f ? 0 : std::max(1.f, starSize / dist);
-		
+
 		if (pt.x + squareSize < 0.f || pt.x >= canvasSize.x ||
 				pt.y + squareSize < 0.f || pt.y >= canvasSize.y)
 			continue;

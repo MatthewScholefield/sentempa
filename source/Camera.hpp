@@ -41,12 +41,12 @@ public:
 
 private:
 	void updateControls(const InputManager &inputManager);
-	
+
 	struct Rotation
 	{
 		Vec2f pos, vel, acc;
 	};
-	
+
 	Vec3f pos, vel, acc;
 	Rotation rot;
 	Vec2f fov;

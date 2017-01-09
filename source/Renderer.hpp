@@ -49,7 +49,7 @@ public:
 
 private:
 	using RenderShapesFunc = int (*)(SDL_Renderer*, const SDL_Point *points, int count);
-	
+
 	RenderShapesFunc getShapesFunc(Shape shape);
 
 	std::vector<SDL_Point> points;
