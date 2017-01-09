@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "Utility.hpp"
 #include "Camera.hpp"
 #include "SdlManager.hpp"
 #include "InputManager.hpp"
@@ -80,13 +81,11 @@ void Camera::updateControls(const InputManager& inputManager)
 		rot.vel.y = newVy;
 }
 
-constexpr float epsilon = 0.00001f;
-
 void Camera::update(float dt, const InputManager &inputManager)
 {
 	updateControls(inputManager);
-	Vec3f d = acc;
-	if (d.mag() >= epsilon)
+	Vec3f a = acc;
+	if (a.mag() >= epsilon)
 	{
 		const float rotX = rot.pos.y;
 		const float rotY = rot.pos.x;
@@ -94,28 +93,28 @@ void Camera::update(float dt, const InputManager &inputManager)
 		const float sx = sin(rotX), cx = cos(rotX);
 		const float sy = sin(rotY), cy = cos(rotY);
 
-		d = {
-			d.x * cy + d.y * sx * sy + d.z * cx * sy,
-			d.y * cx + d.z * -sx,
-			d.x * -sy + d.y * cy * sx + d.z * cx * cy
+		a = {
+			a.x * cy + a.y * sx * sy + a.z * cx * sy,
+			a.y * cx + a.z * -sx,
+			a.x * -sy + a.y * cy * sx + a.z * cx * cy
 		};
 	}
 
 	vel *= friction;
-	vel += d * dt;
+	vel += a * dt;
 	pos += vel * dt;
 
 	rot.vel *= friction;
 	rot.vel += rot.acc * dt;
 	rot.pos += rot.vel * dt;
 
-	if (rot.pos.x > pi())
-		rot.pos.x -= 2.f * pi();
+	if (rot.pos.x > pi)
+		rot.pos.x -= 2.f * pi;
 
-	if (rot.pos.x < -pi())
-		rot.pos.x += 2.f * pi();
+	if (rot.pos.x < -pi)
+		rot.pos.x += 2.f * pi;
 
-	const float capAngle = pi() / 2.f;
+	const float capAngle = pi / 2.f;
 
 	if (rot.pos.y > capAngle)
 		rot.pos.y = capAngle;

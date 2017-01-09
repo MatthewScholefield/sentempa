@@ -19,19 +19,17 @@
 
 #include <cmath>
 
-constexpr float pi()
-{
-	return 3.14159265358979;
-}
+constexpr float epsilon = 0.00001f;
+constexpr float pi = 3.14159265358979;
 
 constexpr float toRad(const float angle)
 {
-	return angle * pi() / 180.f;
+	return angle * pi / 180.f;
 }
 
 constexpr float toDeg(const float angle)
 {
-	return angle * 180.f / pi();
+	return angle * 180.f / pi;
 }
 
 namespace Utility
