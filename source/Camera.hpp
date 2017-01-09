@@ -37,12 +37,17 @@ public:
 	static constexpr float friction = 0.99f;
 	static constexpr float mouseSpeed = 0.3f;
 	static constexpr float moveSpeed = 200.f;
-	static constexpr float turnSpeed = pi() / 2.f;
+	static constexpr float turnSpeed = pi();
 
 private:
 	void updateControls(const InputManager &inputManager);
-
-	Vec2f angularPos, angularVel;
+	
+	struct Rotation
+	{
+		Vec2f pos, vel, acc;
+	};
+	
 	Vec3f pos, vel, acc;
+	Rotation rot;
 	Vec2f fov;
 };

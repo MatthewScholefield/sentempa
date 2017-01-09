@@ -51,7 +51,7 @@ void Camera::recalcFov(int sx, int sy)
 void Camera::updateControls(const InputManager& inputManager)
 {
 	acc = 0.f;
-	angularVel = 0.f;
+	rot.acc = 0.f;
 
 	auto check = [&inputManager](const Key key, float &data, const float val)
 	{
@@ -59,10 +59,10 @@ void Camera::updateControls(const InputManager& inputManager)
 			data = val;
 	};
 
-	check(Key::lookLeft, angularVel.x, -turnSpeed);
-	check(Key::lookRight, angularVel.x, +turnSpeed);
-	check(Key::lookDown, angularVel.y, -turnSpeed);
-	check(Key::lookUp, angularVel.y, +turnSpeed);
+	check(Key::lookLeft, rot.acc.x, -turnSpeed);
+	check(Key::lookRight, rot.acc.x, +turnSpeed);
+	check(Key::lookDown, rot.acc.y, -turnSpeed);
+	check(Key::lookUp, rot.acc.y, +turnSpeed);
 
 	check(Key::moveLeft, acc.x, -moveSpeed);
 	check(Key::moveRight, acc.x, +moveSpeed);
@@ -74,10 +74,10 @@ void Camera::updateControls(const InputManager& inputManager)
 	const float newVx = +mouseSpeed * inputManager.getMouseDx();
 	const float newVy = -mouseSpeed * inputManager.getMouseDy();
 
-	if (std::abs(angularVel.x) < std::abs(newVx))
-		angularVel.x = newVx;
-	if (std::abs(angularVel.y) < std::abs(newVy))
-		angularVel.y = newVy;
+	if (std::abs(rot.vel.x) < std::abs(newVx))
+		rot.vel.x = newVx;
+	if (std::abs(rot.vel.y) < std::abs(newVy))
+		rot.vel.y = newVy;
 }
 
 constexpr float epsilon = 0.00001f;
@@ -88,8 +88,8 @@ void Camera::update(float dt, const InputManager &inputManager)
 	Vec3f d = acc;
 	if (d.mag() >= epsilon)
 	{
-		const float rotX = angularPos.y;
-		const float rotY = angularPos.x;
+		const float rotX = rot.pos.y;
+		const float rotY = rot.pos.x;
 
 		const float sx = sin(rotX), cx = cos(rotX);
 		const float sy = sin(rotY), cy = cos(rotY);
@@ -105,21 +105,23 @@ void Camera::update(float dt, const InputManager &inputManager)
 	vel += d * dt;
 	pos += vel * dt;
 
-	angularPos += angularVel*dt;
+	rot.vel *= friction;
+	rot.vel += rot.acc * dt;
+	rot.pos += rot.vel * dt;
 
-	if (angularPos.x > pi())
-		angularPos.x -= 2.f * pi();
+	if (rot.pos.x > pi())
+		rot.pos.x -= 2.f * pi();
 
-	if (angularPos.x < -pi())
-		angularPos.x += 2.f * pi();
+	if (rot.pos.x < -pi())
+		rot.pos.x += 2.f * pi();
 
 	const float capAngle = pi() / 2.f;
 
-	if (angularPos.y > capAngle)
-		angularPos.y = capAngle;
+	if (rot.pos.y > capAngle)
+		rot.pos.y = capAngle;
 
-	if (angularPos.y < -capAngle)
-		angularPos.y = -capAngle;
+	if (rot.pos.y < -capAngle)
+		rot.pos.y = -capAngle;
 }
 
 const Vec2f& Camera::getFov()
@@ -137,8 +139,8 @@ Vec2f Camera::projectPoint(const Vec3f &point, const Vec2f &canvasSize)
 	Vec3f d = point - pos; // Delta
 	Vec3f rotated;
 	{
-		const float rotX = -angularPos.y;
-		const float rotY = -angularPos.x;
+		const float rotX = -rot.pos.y;
+		const float rotY = -rot.pos.x;
 
 		const float sx = sin(rotX), cx = cos(rotX);
 		const float sy = sin(rotY), cy = cos(rotY);
