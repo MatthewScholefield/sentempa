@@ -36,18 +36,17 @@ int main()
 	while (!SdlManager::shouldQuit())
 	{
 		float dt = Utility::restartTimer();
+
+		// Update
 		SdlManager::update();
 		inputManager.update();
 		starField.update(dt, camera);
 		camera.update(dt, inputManager);
 
-
+		// Render
 		renderer.clear(0, 0, 0);
-		{
-			starField.render(renderer, camera);
-		}
+		starField.render(renderer, camera);
 		renderer.draw();
-		Utility::sleep(1);
 	}
 
 	SdlManager::destroy();
