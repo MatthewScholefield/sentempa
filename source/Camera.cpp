@@ -72,13 +72,21 @@ void Camera::updateControls(const InputManager& inputManager)
 	check(Key::moveBackwards, acc.z, -moveSpeed);
 	check(Key::moveForwards, acc.z, +moveSpeed);
 
-	const float newVx = +mouseSpeed * inputManager.getMouseDx();
-	const float newVy = -mouseSpeed * inputManager.getMouseDy();
-
-	if (std::abs(rot.vel.x) < std::abs(newVx))
-		rot.vel.x = newVx;
-	if (std::abs(rot.vel.y) < std::abs(newVy))
-		rot.vel.y = newVy;
+	const Vec2f mouseVel = {
+		+mouseSpeed * inputManager.getMouseDx(),
+		-mouseSpeed * inputManager.getMouseDy()
+	};
+	
+	bool hasMoved = mouseVel.abs().max() != 0.f;
+	if (hasMoved)
+		mouseMode = true;
+	
+	if (mouseMode)
+	{
+		rot.vel = mouseVel;
+		if (!hasMoved)
+			mouseMode = false;
+	}
 }
 
 void Camera::update(float dt, const InputManager &inputManager)

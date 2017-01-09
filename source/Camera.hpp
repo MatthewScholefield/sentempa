@@ -50,4 +50,5 @@ private:
 	Vec3f pos, vel, acc;
 	Rotation rot;
 	Vec2f fov;
+	bool mouseMode = false;
 };
