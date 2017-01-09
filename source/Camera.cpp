@@ -17,6 +17,7 @@
 
 #include "Camera.hpp"
 #include "SdlManager.hpp"
+#include "InputManager.hpp"
 
 Camera::Camera(const Vec2i &size)
 {
@@ -47,10 +48,43 @@ void Camera::recalcFov(int sx, int sy)
 	}
 }
 
+void Camera::updateControls(const InputManager& inputManager)
+{
+	acc = 0.f;
+	angularVel = 0.f;
+
+	auto check = [&inputManager](const Key key, float &data, const float val)
+	{
+		if (inputManager.isKeyPressed(key))
+			data = val;
+	};
+
+	check(Key::lookLeft, angularVel.x, -turnSpeed);
+	check(Key::lookRight, angularVel.x, +turnSpeed);
+	check(Key::lookDown, angularVel.y, -turnSpeed);
+	check(Key::lookUp, angularVel.y, +turnSpeed);
+
+	check(Key::moveLeft, acc.x, -moveSpeed);
+	check(Key::moveRight, acc.x, +moveSpeed);
+	check(Key::moveUp, acc.y, -moveSpeed);
+	check(Key::moveDown, acc.y, +moveSpeed);
+	check(Key::moveBackwards, acc.z, -moveSpeed);
+	check(Key::moveForwards, acc.z, +moveSpeed);
+
+	const float newVx = +mouseSpeed * inputManager.getMouseDx();
+	const float newVy = -mouseSpeed * inputManager.getMouseDy();
+
+	if (std::abs(angularVel.x) < std::abs(newVx))
+		angularVel.x = newVx;
+	if (std::abs(angularVel.y) < std::abs(newVy))
+		angularVel.y = newVy;
+}
+
 constexpr float epsilon = 0.00001f;
 
-void Camera::update(float dt)
+void Camera::update(float dt, const InputManager &inputManager)
 {
+	updateControls(inputManager);
 	Vec3f d = acc;
 	if (d.mag() >= epsilon)
 	{
@@ -96,16 +130,6 @@ const Vec2f& Camera::getFov()
 const Vec3f& Camera::getPos()
 {
 	return pos;
-}
-
-Vec3f& Camera::getAcc()
-{
-	return acc;
-}
-
-Vec2f& Camera::getAngVel()
-{
-	return angularVel;
 }
 
 Vec2f Camera::projectPoint(const Vec3f &point, const Vec2f &canvasSize)

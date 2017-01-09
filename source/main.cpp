@@ -20,15 +20,7 @@
 #include "Renderer.hpp"
 #include "Utility.hpp"
 #include "StarField.hpp"
-
-void updateMouse(Camera &camera)
-{
-	int dMouseX, dMouseY;
-	SDL_GetRelativeMouseState(&dMouseX, &dMouseY);
-	auto &ang = camera.getAngVel();
-	ang.x = +0.3f * dMouseX;
-	ang.y = -0.3f * dMouseY;
-}
+#include "InputManager.hpp"
 
 int main()
 {
@@ -37,68 +29,18 @@ int main()
 	Renderer renderer(SdlManager::getSdlRenderer(), SdlManager::getSize());
 	Camera camera(renderer.getSize());
 	StarField starField;
-
-	Vec2f keyAng;
-	auto onKeyDown = [&](SDL_Keycode key, bool keyDown)
-	{
-		auto &acc = camera.getAcc();
-		const float setAcc = keyDown ? 200.f : 0.f;
-		const float setAng = keyDown ? pi() / 2.f : 0.f;
-		switch (key)
-		{
-		case SDLK_w:
-			acc.y = -setAcc;
-			break;
-		case SDLK_s:
-			acc.y = setAcc;
-			break;
-		case SDLK_d:
-			acc.x = setAcc;
-			break;
-		case SDLK_a:
-			acc.x = -setAcc;
-			break;
-		case SDLK_e:
-			acc.z = setAcc;
-			break;
-		case SDLK_q:
-			acc.z = -setAcc;
-			break;
-		case SDLK_UP:
-			keyAng.y = setAng;
-			break;
-		case SDLK_DOWN:
-			keyAng.y = -setAng;
-			break;
-		case SDLK_LEFT:
-			keyAng.x = -setAng;
-			break;
-		case SDLK_RIGHT:
-			keyAng.x = setAng;
-			break;
-
-		default:
-			break;
-		}
-	};
-	SdlManager::onKeyChange(onKeyDown);
+	InputManager inputManager;
+	
 	Utility::startTimer();
-
+	
 	while (!SdlManager::shouldQuit())
 	{
 		float dt = Utility::restartTimer();
 		SdlManager::update();
+		inputManager.update();
 		starField.update(dt, camera);
-
-		updateMouse(camera);
-
-		auto &ang = camera.getAngVel();
-		if (keyAng.x != 0.f)
-			ang.x = keyAng.x;
-		if (keyAng.y != 0.f)
-			ang.y = keyAng.y;
-
-		camera.update(dt);
+		camera.update(dt, inputManager);
+		
 
 		renderer.clear(0, 0, 0);
 		{

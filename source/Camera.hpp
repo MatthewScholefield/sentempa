@@ -20,24 +20,28 @@
 #include "Utility.hpp"
 #include "Vec.hpp"
 
+class InputManager;
+
 class Camera
 {
 public:
 	Camera(const Vec2i &size);
 	void resize(int sx, int sy);
 	void recalcFov(int sx, int sy);
-	void update(float dt);
+	void update(float dt, const InputManager &inputManager);
 	const Vec2f &getFov();
 	const Vec3f &getPos();
-	Vec3f &getAcc();
-	Vec2f &getAngVel();
 	Vec2f projectPoint(const Vec3f &p, const Vec2f &canvasSize);
 
 	static constexpr float maxFov = toRad(70.f);
 	static constexpr float friction = 0.99f;
-	
+	static constexpr float mouseSpeed = 0.3f;
+	static constexpr float moveSpeed = 200.f;
+	static constexpr float turnSpeed = pi() / 2.f;
+
 private:
-	
+	void updateControls(const InputManager &inputManager);
+
 	Vec2f angularPos, angularVel;
 	Vec3f pos, vel, acc;
 	Vec2f fov;

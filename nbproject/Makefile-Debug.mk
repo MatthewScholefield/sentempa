@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/source/Camera.o \
+	${OBJECTDIR}/source/InputManager.o \
 	${OBJECTDIR}/source/Renderer.o \
 	${OBJECTDIR}/source/SdlManager.o \
 	${OBJECTDIR}/source/StarField.o \
@@ -71,6 +72,11 @@ ${OBJECTDIR}/source/Camera.o: source/Camera.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
 	$(COMPILE.cc) -g `pkg-config --cflags sdl2` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Camera.o source/Camera.cpp
+
+${OBJECTDIR}/source/InputManager.o: source/InputManager.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	${RM} "$@.d"
+	$(COMPILE.cc) -g `pkg-config --cflags sdl2` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/InputManager.o source/InputManager.cpp
 
 ${OBJECTDIR}/source/Renderer.o: source/Renderer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
