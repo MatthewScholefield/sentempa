@@ -34,7 +34,7 @@ public:
 	Vec2f projectPoint(const Vec3f &p, const Vec2f &canvasSize);
 
 	static constexpr float maxFov = toRad(70.f);
-	static constexpr float friction = 0.99f;
+	static constexpr float friction = 0.3f;
 	static constexpr float mouseSpeed = 0.3f;
 	static constexpr float moveSpeed = 200.f;
 	static constexpr float turnSpeed = pi;

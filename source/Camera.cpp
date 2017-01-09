@@ -100,11 +100,11 @@ void Camera::update(float dt, const InputManager &inputManager)
 		};
 	}
 
-	vel *= friction;
+	vel *= pow(friction, dt);
 	vel += a * dt;
 	pos += vel * dt;
 
-	rot.vel *= friction;
+	rot.vel *= pow(friction, dt);
 	rot.vel += rot.acc * dt;
 	rot.pos += rot.vel * dt;
 
