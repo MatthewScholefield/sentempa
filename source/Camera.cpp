@@ -49,7 +49,7 @@ void Camera::recalcFov(cint sx, cint sy)
 	}
 }
 
-void Camera::updateControls(const InputManager& inputManager)
+void Camera::updateControls(const InputManager &inputManager)
 {
 	acc = 0.f;
 	rot.acc = 0.f;
@@ -59,8 +59,8 @@ void Camera::updateControls(const InputManager& inputManager)
 		if (inputManager.isKeyPressed(key))
 			data = val;
 	};
-	
-	cint xSign = std::abs(rot.pos.y) > pi/2.f ? -1 : +1;
+
+	cint xSign = std::abs(rot.pos.y) > pi / 2.f ? -1 : +1;
 
 	check(Key::lookLeft, rot.acc.x, -xSign * turnSpeed);
 	check(Key::lookRight, rot.acc.x, +xSign * turnSpeed);
@@ -78,11 +78,11 @@ void Camera::updateControls(const InputManager& inputManager)
 		+xSign * mouseSpeed * inputManager.getMouseDx(),
 		-mouseSpeed * inputManager.getMouseDy()
 	};
-	
+
 	const bool hasMoved = mouseVel.abs().max() != 0.f;
 	if (hasMoved)
 		mouseMode = true;
-	
+
 	if (mouseMode)
 	{
 		rot.vel = mouseVel;
@@ -123,7 +123,7 @@ void Camera::update(cfloat dt, const InputManager &inputManager)
 
 	if (rot.pos.x < -pi)
 		rot.pos.x += 2.f * pi;
-	
+
 	if (rot.pos.y > pi)
 		rot.pos.y -= 2.f * pi;
 
@@ -131,12 +131,12 @@ void Camera::update(cfloat dt, const InputManager &inputManager)
 		rot.pos.y += 2.f * pi;
 }
 
-const Vec2f& Camera::getFov() const
+const Vec2f &Camera::getFov() const
 {
 	return fov;
 }
 
-const Vec3f& Camera::getPos() const
+const Vec3f &Camera::getPos() const
 {
 	return pos;
 }
