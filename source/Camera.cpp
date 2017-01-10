@@ -60,8 +60,10 @@ void Camera::updateControls(const InputManager& inputManager)
 			data = val;
 	};
 	
-	check(Key::lookLeft, rot.acc.x, -turnSpeed);
-	check(Key::lookRight, rot.acc.x, +turnSpeed);
+	cint xSign = std::abs(rot.pos.y) > pi/2.f ? -1 : +1;
+
+	check(Key::lookLeft, rot.acc.x, -xSign * turnSpeed);
+	check(Key::lookRight, rot.acc.x, +xSign * turnSpeed);
 	check(Key::lookDown, rot.acc.y, -turnSpeed);
 	check(Key::lookUp, rot.acc.y, +turnSpeed);
 
@@ -73,7 +75,7 @@ void Camera::updateControls(const InputManager& inputManager)
 	check(Key::moveForwards, acc.z, +moveSpeed);
 
 	const Vec2f mouseVel = {
-		+mouseSpeed * inputManager.getMouseDx(),
+		+xSign * mouseSpeed * inputManager.getMouseDx(),
 		-mouseSpeed * inputManager.getMouseDy()
 	};
 	
@@ -122,13 +124,11 @@ void Camera::update(cfloat dt, const InputManager &inputManager)
 	if (rot.pos.x < -pi)
 		rot.pos.x += 2.f * pi;
 	
-	const float capAngle = pi / 2.f;
+	if (rot.pos.y > pi)
+		rot.pos.y -= 2.f * pi;
 
-	if (rot.pos.y > capAngle)
-		rot.pos.y = capAngle;
-
-	if (rot.pos.y < -capAngle)
-		rot.pos.y = -capAngle;
+	if (rot.pos.y < -pi)
+		rot.pos.y += 2.f * pi;
 }
 
 const Vec2f& Camera::getFov() const
