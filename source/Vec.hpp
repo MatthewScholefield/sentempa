@@ -53,7 +53,7 @@ public:
 	T x, y, z;
 };
 
-using Vec2i = Vec2<int>;
-using Vec2f = Vec2<float>;
-using Vec3i = Vec3<int>;
-using Vec3f = Vec3<float>;
+CREATE_ALIAS(u, unsigned int);
+CREATE_ALIAS(i, int);
+CREATE_ALIAS(f, float);
+CREATE_ALIAS(d, double);

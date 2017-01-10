@@ -74,7 +74,7 @@ void Camera::updateControls(const InputManager &inputManager)
 	check(Key::moveBackwards, acc.z, -moveSpeed);
 	check(Key::moveForwards, acc.z, +moveSpeed);
 
-	const Vec2f mouseVel = {
+	cVec2f mouseVel = {
 		+xSign * mouseSpeed * inputManager.getMouseDx(),
 		-mouseSpeed * inputManager.getMouseDy()
 	};
@@ -131,17 +131,17 @@ void Camera::update(cfloat dt, const InputManager &inputManager)
 		rot.pos.y += 2.f * pi;
 }
 
-const Vec2f &Camera::getFov() const
+cVec2f &Camera::getFov() const
 {
 	return fov;
 }
 
-const Vec3f &Camera::getPos() const
+cVec3f &Camera::getPos() const
 {
 	return pos;
 }
 
-Vec2f Camera::projectPoint(const Vec3f &point, const Vec2f &canvasSize) const
+Vec2f Camera::projectPoint(cVec3f &point, cVec2f &canvasSize) const
 {
 	Vec3f d = point - pos; // Delta
 	Vec3f rotated;

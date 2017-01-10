@@ -107,3 +107,6 @@ OP_ARITH(|, N)
 #define _MAG_FN_Z_2
 #define _MAG_FN_Z_3 +z*z
 #define CREATE_MAG_FN(N) _MAG_FN(_MAG_FN_Z_##N)
+
+#define _CREATE_ALIAS(ST, T, N) using Vec##N##ST=Vec##N<T>;using cVec##N##ST=const Vec##N<T>;
+#define CREATE_ALIAS(ST, T) _CREATE_ALIAS(ST,T,2)_CREATE_ALIAS(ST,T,3)

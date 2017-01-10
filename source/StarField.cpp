@@ -93,7 +93,7 @@ void StarField::render(Renderer &renderer, const Camera &camera) const
 	const auto canvasSize = renderer.getSize().cast<float>();
 	for (const Star &i : stars)
 	{
-		const Vec2f pt = camera.projectPoint(i.p, canvasSize);
+		cVec2f pt = camera.projectPoint(i.p, canvasSize);
 		if (std::isnan(pt.x))
 			continue;
 

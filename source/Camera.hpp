@@ -35,9 +35,9 @@ public:
 	Camera(const Vec2i &size);
 	void recalcFov(cint sx, cint sy);
 	void update(cfloat dt, const InputManager &inputManager);
-	const Vec2f &getFov() const;
-	const Vec3f &getPos() const;
-	Vec2f projectPoint(const Vec3f &p, const Vec2f &canvasSize) const;
+	cVec2f &getFov() const;
+	cVec3f &getPos() const;
+	Vec2f projectPoint(cVec3f &p, cVec2f &canvasSize) const;
 
 private:
 	void resize(cint sx, cint sy);
