@@ -21,8 +21,9 @@
 #include "StarField.hpp"
 #include "Renderer.hpp"
 #include "Camera.hpp"
+#include "types.hpp"
 
-void StarField::refill(Camera &camera)
+void StarField::refill(const Camera &camera)
 {
 	auto shouldRemove = [&camera](const Star & star)
 	{
@@ -71,7 +72,7 @@ void StarField::refill(Camera &camera)
 
 	for (int i = 0; i < boxes.size(); ++i)
 	{
-		const int numStars = std::round(starsToCreate * volumes[i] / totalVolume);
+		cint numStars = std::round(starsToCreate * volumes[i] / totalVolume);
 		const auto size = boxes[i].size.cast<int>();
 		for (int j = 0; j < numStars; ++j)
 			stars.push_back({boxes[i].pos + size.max(1).rand().cast<float>()});
@@ -79,7 +80,7 @@ void StarField::refill(Camera &camera)
 	box = newBox;
 }
 
-void StarField::update(float dt, Camera &camera)
+void StarField::update(cfloat dt, const Camera &camera)
 {
 	for (Star &i : stars)
 		i.update(dt);
@@ -87,7 +88,7 @@ void StarField::update(float dt, Camera &camera)
 	refill(camera);
 }
 
-void StarField::render(Renderer &renderer, Camera &camera) const
+void StarField::render(Renderer &renderer, const Camera &camera) const
 {
 	const auto canvasSize = renderer.getSize().cast<float>();
 	for (const Star &i : stars)
@@ -96,8 +97,8 @@ void StarField::render(Renderer &renderer, Camera &camera) const
 		if (std::isnan(pt.x))
 			continue;
 
-		const float dist = i.p.dist(camera.getPos());
-		const int squareSize = dist == 0.f ? 0 : std::max(1.f, starSize / dist);
+		cfloat dist = i.p.dist(camera.getPos());
+		cint squareSize = dist == 0.f ? 0 : std::max(1.f, starSize / dist);
 
 		if (pt.x + squareSize < 0.f || pt.x >= canvasSize.x ||
 				pt.y + squareSize < 0.f || pt.y >= canvasSize.y)
@@ -108,7 +109,7 @@ void StarField::render(Renderer &renderer, Camera &camera) const
 			continue;
 
 		int r = 255, g = 255, b = 255;
-		const int twinkle = rand() % 301 - 150;
+		cint twinkle = rand() % 301 - 150;
 		if (twinkle > 0)
 		{
 			r -= twinkle;
@@ -125,9 +126,9 @@ void StarField::render(Renderer &renderer, Camera &camera) const
 	}
 }
 
-void StarField::Star::update(float dt) { }
+void StarField::Star::update(cfloat dt) { }
 
-bool StarField::Star::shouldRemove(Vec2i size) const
+bool StarField::Star::shouldRemove(const Vec2i &size) const
 {
 	return p.x < 0 || p.x >= size.x ||
 			p.y < 0 || p.y >= size.y;

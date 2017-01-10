@@ -34,15 +34,15 @@ controls({
 	{SDLK_q, Key::moveBackwards},
 })
 {
-	auto incrementKey = [](Key & key)
+	cauto incrementKey = [](Key & key)
 	{
-		key = (Key) ((int) key + 1);
+		key = (Key) ((cint) key + 1);
 	};
 
 	for (Key key = Key::begin; key != Key::end; incrementKey(key))
 		keyPressed[key] = false;
 
-	SdlManager::onKeyChange([this](SDL_Keycode key, bool keyDown)
+	SdlManager::onKeyChange([this](const SDL_Keycode key, cbool keyDown)
 	{
 		onKeyDown(key, keyDown);
 	});
@@ -56,7 +56,7 @@ bool InputManager::isKeyPressed(const Key key) const
 	return result->second;
 }
 
-void InputManager::onKeyDown(SDL_Keycode key, bool keyDown)
+void InputManager::onKeyDown(const SDL_Keycode key, cbool keyDown)
 {
 	auto controlKeyIt = controls.find(key);
 	if (controlKeyIt == controls.end())

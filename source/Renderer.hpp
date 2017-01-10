@@ -20,6 +20,7 @@
 #include <vector>
 #include <SDL2/SDL_render.h>
 #include "Vec.hpp"
+#include "types.hpp"
 
 enum class Shape
 {
@@ -30,27 +31,27 @@ class Renderer
 {
 public:
 	Renderer(SDL_Renderer *sdlRenderer, const Vec2i &size);
-	void setColor(int r, int g, int b, int a = 255);
-	void clear(int r = 0, int g = 0, int b = 0, int a = 255);
+	void setColor(cint r, cint g, cint b, cint a = 255);
+	void clear(cint r = 0, cint g = 0, cint b = 0, cint a = 255);
 
-	void drawSingleLine(int x1, int y1, int x2, int y2);
-	void drawSinglePoint(int x, int y);
-	void drawSingleFillRect(int x, int y, int w, int h);
+	void drawSingleLine(cint x1, cint y1, cint x2, cint y2);
+	void drawSinglePoint(cint x, cint y);
+	void drawSingleFillRect(cint x, cint y, cint w, cint h);
 
 	void beginPoints();
-	void addPoint(int x, int y);
+	void addPoint(cint x, cint y);
 	void endPoints(Shape shape);
 
 	void draw();
-	void resize(int sx, int sy);
-	int getSX();
-	int getSY();
-	const Vec2i &getSize();
+	void resize(cint sx, cint sy);
+	int getSX() const;
+	int getSY() const;
+	const Vec2i &getSize() const;
 
 private:
 	using RenderShapesFunc = int (*)(SDL_Renderer*, const SDL_Point *points, int count);
 
-	RenderShapesFunc getShapesFunc(Shape shape);
+	RenderShapesFunc getShapesFunc(Shape shape) const;
 
 	std::vector<SDL_Point> points;
 	SDL_Renderer *sdlRenderer;

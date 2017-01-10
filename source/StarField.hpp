@@ -20,6 +20,7 @@
 #include <vector>
 
 #include "Vec.hpp"
+#include "types.hpp"
 
 class Renderer;
 class Camera;
@@ -27,9 +28,9 @@ class Camera;
 class StarField
 {
 public:
-	void refill(Camera &camera);
-	void update(float dt, Camera &camera);
-	void render(Renderer &renderer, Camera &camera) const;
+	void refill(const Camera &camera);
+	void update(cfloat dt, const Camera &camera);
+	void render(Renderer &renderer, const Camera &camera) const;
 
 private:
 	static constexpr int maxStars = 20000, maxDepth = 1000;
@@ -38,8 +39,8 @@ private:
 	class Star
 	{
 	public:
-		void update(float dt);
-		bool shouldRemove(Vec2i size) const;
+		void update(cfloat dt);
+		bool shouldRemove(const Vec2i &size) const;
 		Vec3f p;
 	};
 	std::vector<Star> stars;

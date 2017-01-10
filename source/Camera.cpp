@@ -23,18 +23,18 @@
 Camera::Camera(const Vec2i &size)
 {
 	recalcFov(size.x, size.y);
-	SdlManager::onResize([this](int sx, int sy)
+	SdlManager::onResize([this](cint sx, cint sy)
 	{
 		resize(sx, sy);
 	});
 }
 
-void Camera::resize(int sx, int sy)
+void Camera::resize(cint sx, cint sy)
 {
 	recalcFov(sx, sy);
 }
 
-void Camera::recalcFov(int sx, int sy)
+void Camera::recalcFov(cint sx, cint sy)
 {
 	float screenSize = 4.f * tan(maxFov / 2.f);
 	if (sx > sy)
@@ -54,12 +54,12 @@ void Camera::updateControls(const InputManager& inputManager)
 	acc = 0.f;
 	rot.acc = 0.f;
 
-	auto check = [&inputManager](const Key key, float &data, const float val)
+	cauto check = [&inputManager](const Key key, float &data, cfloat val)
 	{
 		if (inputManager.isKeyPressed(key))
 			data = val;
 	};
-
+	
 	check(Key::lookLeft, rot.acc.x, -turnSpeed);
 	check(Key::lookRight, rot.acc.x, +turnSpeed);
 	check(Key::lookDown, rot.acc.y, -turnSpeed);
@@ -77,7 +77,7 @@ void Camera::updateControls(const InputManager& inputManager)
 		-mouseSpeed * inputManager.getMouseDy()
 	};
 	
-	bool hasMoved = mouseVel.abs().max() != 0.f;
+	const bool hasMoved = mouseVel.abs().max() != 0.f;
 	if (hasMoved)
 		mouseMode = true;
 	
@@ -89,7 +89,7 @@ void Camera::updateControls(const InputManager& inputManager)
 	}
 }
 
-void Camera::update(float dt, const InputManager &inputManager)
+void Camera::update(cfloat dt, const InputManager &inputManager)
 {
 	updateControls(inputManager);
 	Vec3f a = acc;
@@ -121,7 +121,7 @@ void Camera::update(float dt, const InputManager &inputManager)
 
 	if (rot.pos.x < -pi)
 		rot.pos.x += 2.f * pi;
-
+	
 	const float capAngle = pi / 2.f;
 
 	if (rot.pos.y > capAngle)
@@ -131,17 +131,17 @@ void Camera::update(float dt, const InputManager &inputManager)
 		rot.pos.y = -capAngle;
 }
 
-const Vec2f& Camera::getFov()
+const Vec2f& Camera::getFov() const
 {
 	return fov;
 }
 
-const Vec3f& Camera::getPos()
+const Vec3f& Camera::getPos() const
 {
 	return pos;
 }
 
-Vec2f Camera::projectPoint(const Vec3f &point, const Vec2f &canvasSize)
+Vec2f Camera::projectPoint(const Vec3f &point, const Vec2f &canvasSize) const
 {
 	Vec3f d = point - pos; // Delta
 	Vec3f rotated;

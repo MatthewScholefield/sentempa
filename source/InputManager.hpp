@@ -19,6 +19,7 @@
 
 #include <unordered_map>
 #include <SDL2/SDL_keycode.h>
+#include "types.hpp"
 
 enum class Key
 {
@@ -45,7 +46,7 @@ class InputManager
 public:
 	InputManager();
 
-	void onKeyDown(SDL_Keycode key, bool keyDown);
+	void onKeyDown(const SDL_Keycode key, cbool keyDown);
 	bool isKeyPressed(const Key key) const;
 	void update();
 	int getMouseDx() const;

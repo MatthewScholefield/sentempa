@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Matthew D. Scholefield
+ * Copyright (C) 2017 Matthew D. Scholefield
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,33 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <chrono>
-#include <SDL2/SDL.h>
-#include "Utility.hpp"
+#pragma once
 
-namespace Utility
-{
-	namespace chr = std::chrono;
-	using sec = chr::seconds;
-	using ns = chr::nanoseconds;
-	using getTime = chr::high_resolution_clock;
-	auto start = getTime::now();
-
-	void sleep(const long ms)
-	{
-		SDL_Delay(ms);
-	}
-
-	void startTimer()
-	{
-		start = getTime::now();
-	}
-
-	float restartTimer()
-	{
-		cauto end = getTime::now();
-		cauto diff = end - start;
-		start = end;
-		return chr::duration_cast<ns>(diff).count() / (1000 * 1000 * 1000.f);
-	}
-}
+// Typedefs to reduce typing and encourage constness
+using cbool = const bool;
+using cint = const int;
+using cfloat = const float;
+using cdouble = const double;
+#define cauto const auto

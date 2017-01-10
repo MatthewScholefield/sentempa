@@ -19,6 +19,7 @@
 
 #include "Utility.hpp"
 #include "Vec.hpp"
+#include "types.hpp"
 
 class InputManager;
 
@@ -26,12 +27,12 @@ class Camera
 {
 public:
 	Camera(const Vec2i &size);
-	void resize(int sx, int sy);
-	void recalcFov(int sx, int sy);
-	void update(float dt, const InputManager &inputManager);
-	const Vec2f &getFov();
-	const Vec3f &getPos();
-	Vec2f projectPoint(const Vec3f &p, const Vec2f &canvasSize);
+	void resize(cint sx, cint sy);
+	void recalcFov(cint sx, cint sy);
+	void update(cfloat dt, const InputManager &inputManager);
+	const Vec2f &getFov() const;
+	const Vec3f &getPos() const;
+	Vec2f projectPoint(const Vec3f &p, const Vec2f &canvasSize) const;
 
 	static constexpr float maxFov = toRad(70.f);
 	static constexpr float friction = 0.3f;

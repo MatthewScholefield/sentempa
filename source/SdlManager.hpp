@@ -21,13 +21,14 @@
 #include <functional>
 #include <SDL2/SDL.h>
 #include "Vec.hpp"
+#include "types.hpp"
 
 class SdlManager
 {
 	SdlManager() = delete;
 public:
-	using KeyChangeFunc = std::function<void(SDL_Keycode, bool keyDown)>;
-	using ResizeFunc = std::function<void(int, int) >;
+	using KeyChangeFunc = std::function<void(const SDL_Keycode, cbool keyDown)>;
+	using ResizeFunc = std::function<void(cint, cint) >;
 
 	static void init();
 	static void destroy();
@@ -35,12 +36,12 @@ public:
 	static SDL_Renderer *getSdlRenderer();
 	static void update();
 	static bool shouldQuit();
-	static void onKeyChange(KeyChangeFunc func);
-	static void onResize(ResizeFunc func);
+	static void onKeyChange(const KeyChangeFunc func);
+	static void onResize(const ResizeFunc func);
 
 private:
-	static const int screenWidth = 640;
-	static const int screenHeight = 480;
+	static cint screenWidth = 640;
+	static cint screenHeight = 480;
 
 	static bool mustQuit;
 	static std::vector<KeyChangeFunc> keyChangeFuncs;

@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "types.hpp"
 #include <SDL2/SDL_render.h>
 #include "Renderer.hpp"
 #include "SdlManager.hpp"
@@ -22,94 +23,81 @@
 Renderer::Renderer(SDL_Renderer *sdlRenderer, const Vec2i &size) :
 sdlRenderer(sdlRenderer), size(size)
 {
-	SdlManager::onResize([this](int sx, int sy)
+	SdlManager::onResize([this](cint sx, cint sy)
 	{
 		resize(sx, sy);
 	});
 }
 
-void Renderer::setColor(int r, int g, int b, int a)
+void Renderer::setColor(cint r, cint g, cint b, cint a)
 {
-
 	SDL_SetRenderDrawColor(sdlRenderer, r, g, b, a);
 }
 
-void Renderer::clear(int r, int g, int b, int a)
+void Renderer::clear(cint r, cint g, cint b, cint a)
 {
-
 	setColor(r, g, b, a);
 	SDL_RenderClear(sdlRenderer);
 }
 
-void Renderer::drawSingleLine(int x1, int y1, int x2, int y2)
+void Renderer::drawSingleLine(cint x1, cint y1, cint x2, cint y2)
 {
-
 	SDL_RenderDrawLine(sdlRenderer, x1, y1, x2, y2);
 }
 
-void Renderer::drawSinglePoint(int x, int y)
+void Renderer::drawSinglePoint(cint x, cint y)
 {
-
 	SDL_RenderDrawPoint(sdlRenderer, x, y);
 }
 
-void Renderer::drawSingleFillRect(int x, int y, int w, int h)
+void Renderer::drawSingleFillRect(cint x, cint y, cint w, cint h)
 {
-
 	SDL_Rect rect{x, y, w, h};
 	SDL_RenderFillRect(sdlRenderer, &rect);
 }
 
 void Renderer::beginPoints()
 {
-
 	points.clear();
 }
 
-void Renderer::addPoint(int x, int y)
+void Renderer::addPoint(cint x, cint y)
 {
-
 	points.push_back({x, y});
 }
 
 void Renderer::endPoints(Shape shape)
 {
-
 	auto func = getShapesFunc(shape);
 	func(sdlRenderer, points.data(), points.size());
 }
 
 void Renderer::draw()
 {
-
 	SDL_RenderPresent(sdlRenderer);
 }
 
-void Renderer::resize(int sx, int sy)
+void Renderer::resize(cint sx, cint sy)
 {
-
 	size = {sx, sy};
 }
 
-int Renderer::getSX()
+int Renderer::getSX() const
 {
-
 	return size.x;
 }
 
-int Renderer::getSY()
+int Renderer::getSY() const
 {
-
 	return size.y;
 }
 
-const Vec2i & Renderer::getSize()
+const Vec2i & Renderer::getSize() const
 {
-
 	return size;
 }
 
-Renderer::RenderShapesFunc Renderer::getShapesFunc(Shape shape)
+Renderer::RenderShapesFunc Renderer::getShapesFunc(Shape shape) const
 {
 	switch (shape)
 	{

@@ -97,12 +97,12 @@ bool SdlManager::shouldQuit()
 	return mustQuit;
 }
 
-void SdlManager::onKeyChange(KeyChangeFunc func)
+void SdlManager::onKeyChange(const KeyChangeFunc func)
 {
 	keyChangeFuncs.push_back(func);
 }
 
-void SdlManager::onResize(ResizeFunc func)
+void SdlManager::onResize(const ResizeFunc func)
 {
 	resizeFuncs.push_back(func);
 }
