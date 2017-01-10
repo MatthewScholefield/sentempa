@@ -25,22 +25,22 @@ class InputManager;
 
 class Camera
 {
-public:
-	Camera(const Vec2i &size);
-	void resize(cint sx, cint sy);
-	void recalcFov(cint sx, cint sy);
-	void update(cfloat dt, const InputManager &inputManager);
-	const Vec2f &getFov() const;
-	const Vec3f &getPos() const;
-	Vec2f projectPoint(const Vec3f &p, const Vec2f &canvasSize) const;
-
 	static constexpr float maxFov = toRad(70.f);
 	static constexpr float friction = 0.3f;
 	static constexpr float mouseSpeed = 0.3f;
 	static constexpr float moveSpeed = 200.f;
 	static constexpr float turnSpeed = pi;
 
+public:
+	Camera(const Vec2i &size);
+	void recalcFov(cint sx, cint sy);
+	void update(cfloat dt, const InputManager &inputManager);
+	const Vec2f &getFov() const;
+	const Vec3f &getPos() const;
+	Vec2f projectPoint(const Vec3f &p, const Vec2f &canvasSize) const;
+
 private:
+	void resize(cint sx, cint sy);
 	void updateControls(const InputManager &inputManager);
 
 	struct Rotation
@@ -48,8 +48,10 @@ private:
 		Vec2f pos, vel, acc;
 	};
 
-	Vec3f pos, vel, acc;
 	Rotation rot;
+
 	Vec2f fov;
+	Vec3f pos, vel, acc;
+
 	bool mouseMode = false;
 };
