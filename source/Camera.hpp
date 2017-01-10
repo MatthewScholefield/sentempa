@@ -43,12 +43,10 @@ private:
 	void resize(cint sx, cint sy);
 	void updateControls(const InputManager &inputManager);
 
-	struct Rotation
+	struct
 	{
 		Vec2f pos, vel, acc;
-	};
-
-	Rotation rot;
+	} rot; // Rotation
 
 	Vec2f fov;
 	Vec3f pos, vel, acc;
