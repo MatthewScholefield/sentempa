@@ -36,6 +36,4 @@ constexpr float toDeg(cfloat angle)
 namespace Utility
 {
 	void sleep(const long ms);
-	void startTimer();
-	float restartTimer();
 }

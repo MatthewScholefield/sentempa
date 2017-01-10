@@ -21,6 +21,7 @@
 #include "Utility.hpp"
 #include "StarField.hpp"
 #include "InputManager.hpp"
+#include "Timer.hpp"
 
 int main()
 {
@@ -30,12 +31,11 @@ int main()
 	Camera camera(renderer.getSize());
 	StarField starField;
 	InputManager inputManager;
-
-	Utility::startTimer();
+	Timer timer;
 
 	while (!SdlManager::shouldQuit())
 	{
-		float dt = Utility::restartTimer();
+		float dt = timer.restart();
 
 		// Update
 		SdlManager::update();

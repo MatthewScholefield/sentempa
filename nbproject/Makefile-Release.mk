@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/source/Renderer.o \
 	${OBJECTDIR}/source/SdlManager.o \
 	${OBJECTDIR}/source/StarField.o \
+	${OBJECTDIR}/source/Timer.o \
 	${OBJECTDIR}/source/Utility.o \
 	${OBJECTDIR}/source/main.o
 
@@ -92,6 +93,11 @@ ${OBJECTDIR}/source/StarField.o: source/StarField.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/StarField.o source/StarField.cpp
+
+${OBJECTDIR}/source/Timer.o: source/Timer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Timer.o source/Timer.cpp
 
 ${OBJECTDIR}/source/Utility.o: source/Utility.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source

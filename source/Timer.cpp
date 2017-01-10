@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Matthew D. Scholefield
+ * Copyright (C) 2017 Matthew D. Scholefield
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,13 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <SDL2/SDL.h>
-#include "Utility.hpp"
+#include <chrono>
+#include "Timer.hpp"
+#include "types.hpp"
 
-namespace Utility
+float Timer::restart()
 {
-	void sleep(const long ms)
-	{
-		SDL_Delay(ms);
-	}
+	cauto now = Clock::now();
+	cauto diff = now - last;
+	last = now;
+	return std::chrono::duration_cast<Dur>(diff).count();
 }

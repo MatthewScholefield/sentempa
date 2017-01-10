@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Matthew D. Scholefield
+ * Copyright (C) 2017 Matthew D. Scholefield
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,13 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <SDL2/SDL.h>
-#include "Utility.hpp"
+#pragma once
 
-namespace Utility
+#include <chrono>
+
+class Timer
 {
-	void sleep(const long ms)
-	{
-		SDL_Delay(ms);
-	}
-}
+	using sec = std::chrono::seconds;
+	using Dur = std::chrono::duration<float>;
+	using Resolution = std::chrono::nanoseconds;
+	using Clock = std::chrono::high_resolution_clock;
+	using TimePoint = std::chrono::time_point<Clock, Resolution>;
+
+public:
+	float restart();
+
+private:
+	TimePoint last = Clock::now();
+};

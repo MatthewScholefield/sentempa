@@ -9,6 +9,7 @@
       <itemPath>source/Renderer.hpp</itemPath>
       <itemPath>source/SdlManager.hpp</itemPath>
       <itemPath>source/StarField.hpp</itemPath>
+      <itemPath>source/Timer.hpp</itemPath>
       <itemPath>source/Utility.hpp</itemPath>
       <itemPath>source/Vec.hpp</itemPath>
       <itemPath>source/Vec.inl</itemPath>
@@ -26,6 +27,7 @@
       <itemPath>source/Renderer.cpp</itemPath>
       <itemPath>source/SdlManager.cpp</itemPath>
       <itemPath>source/StarField.cpp</itemPath>
+      <itemPath>source/Timer.cpp</itemPath>
       <itemPath>source/Utility.cpp</itemPath>
       <itemPath>source/main.cpp</itemPath>
     </logicalFolder>
@@ -82,6 +84,10 @@
       </item>
       <item path="source/StarField.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="source/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Timer.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="source/Utility.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/Utility.hpp" ex="false" tool="3" flavor2="0">
@@ -135,6 +141,10 @@
       <item path="source/StarField.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/StarField.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Timer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="source/Utility.cpp" ex="false" tool="1" flavor2="0">
       </item>
