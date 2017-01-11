@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Matthew D. Scholefield
+ * Copyright (C) 2017 Matthew D. Scholefield
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,41 +17,20 @@
 
 #pragma once
 
+#include <memory>
 #include <vector>
-
 #include "Vec.hpp"
-#include "types.hpp"
 
 class Renderer;
 class Camera;
 
-class StarField
+class Polygon
 {
+	using Triangle = std::array<Vec3f, 3>;
 public:
-	void refill(const Camera &camera);
-	void update(cfloat dt, const Camera &camera);
+	Polygon();
 	void render(Renderer &renderer, const Camera &camera) const;
-	static constexpr int maxStars = 20000, maxDepth = 1000;
+
 private:
-
-	static constexpr float starSize = 800.f;
-
-	class Star
-	{
-	public:
-		void update(cfloat dt);
-		bool shouldRemove(const Vec2i &size) const;
-		Vec3f p;
-	};
-	std::vector<Star> stars;
-
-	class Box
-	{
-	public:
-		Vec3f pos;
-		Vec3f size;
-	};
-
-	// Area containing all existing stars
-	Box box;
+	std::vector<Triangle> triangles;
 };

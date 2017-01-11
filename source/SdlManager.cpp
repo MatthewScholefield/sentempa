@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdint.h>
+
 #include "SdlManager.hpp"
 #include "Vec.hpp"
 
@@ -34,7 +36,7 @@ void SdlManager::init()
 							SDL_WINDOWPOS_CENTERED,
 							SDL_WINDOWPOS_CENTERED,
 							screenWidth, screenHeight,
-							SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL |
+							SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_OPENGL |
 							SDL_WINDOW_RESIZABLE);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);

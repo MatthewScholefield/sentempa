@@ -22,6 +22,7 @@
 #include "StarField.hpp"
 #include "InputManager.hpp"
 #include "Timer.hpp"
+#include "Polygon.hpp"
 
 int main()
 {
@@ -32,6 +33,7 @@ int main()
 	StarField starField;
 	InputManager inputManager;
 	Timer timer;
+	Polygon poly;
 
 	while (!SdlManager::shouldQuit())
 	{
@@ -46,6 +48,7 @@ int main()
 		// Render
 		renderer.clear(0, 0, 0);
 		starField.render(renderer, camera);
+		poly.render(renderer, camera);
 		renderer.draw();
 	}
 

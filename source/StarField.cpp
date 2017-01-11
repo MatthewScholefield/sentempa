@@ -121,8 +121,7 @@ void StarField::render(Renderer &renderer, const Camera &camera) const
 			b += twinkle;
 		}
 
-		renderer.setColor(r, g, b, alpha);
-		renderer.drawSingleFillRect(pt.x, pt.y, squareSize, squareSize);
+		renderer.drawFillSquare(pt.x, pt.y, squareSize, makeCol(r, g, b, alpha));
 	}
 }
 

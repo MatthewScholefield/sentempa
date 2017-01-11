@@ -17,6 +17,7 @@
 
 #include "types.hpp"
 #include <SDL2/SDL_render.h>
+#include <SDL2/SDL2_gfxPrimitives.h>
 #include "Renderer.hpp"
 #include "SdlManager.hpp"
 
@@ -50,10 +51,14 @@ void Renderer::drawSinglePoint(cint x, cint y)
 	SDL_RenderDrawPoint(sdlRenderer, x, y);
 }
 
-void Renderer::drawSingleFillRect(cint x, cint y, cint w, cint h)
+void Renderer::drawFillSquare(cint x, cint y, cint rad, const colInt col)
 {
-	SDL_Rect rect{x, y, w, h};
-	SDL_RenderFillRect(sdlRenderer, &rect);
+	boxColor(sdlRenderer, x, y, x+rad, y+rad, col);
+}
+
+void Renderer::drawTri(const std::array<Vec2f, 3> &pts, const colInt col)
+{
+	filledTrigonColor(sdlRenderer, pts[0].x, pts[0].y, pts[1].x, pts[1].y, pts[2].x, pts[2].y, col);
 }
 
 void Renderer::beginPoints()

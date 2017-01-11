@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/source/Camera.o \
 	${OBJECTDIR}/source/InputManager.o \
+	${OBJECTDIR}/source/Polygon.o \
 	${OBJECTDIR}/source/Renderer.o \
 	${OBJECTDIR}/source/SdlManager.o \
 	${OBJECTDIR}/source/StarField.o \
@@ -59,7 +60,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=`pkg-config --libs sdl2`  
+LDLIBSOPTIONS=`pkg-config --libs sdl2` `pkg-config --libs SDL2_gfx`  
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -72,42 +73,47 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sentempa: ${OBJECTFILES}
 ${OBJECTDIR}/source/Camera.o: source/Camera.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
-	$(COMPILE.cc) -g `pkg-config --cflags sdl2` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Camera.o source/Camera.cpp
+	$(COMPILE.cc) -g `pkg-config --cflags sdl2` `pkg-config --cflags SDL2_gfx` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Camera.o source/Camera.cpp
 
 ${OBJECTDIR}/source/InputManager.o: source/InputManager.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
-	$(COMPILE.cc) -g `pkg-config --cflags sdl2` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/InputManager.o source/InputManager.cpp
+	$(COMPILE.cc) -g `pkg-config --cflags sdl2` `pkg-config --cflags SDL2_gfx` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/InputManager.o source/InputManager.cpp
+
+${OBJECTDIR}/source/Polygon.o: source/Polygon.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	${RM} "$@.d"
+	$(COMPILE.cc) -g `pkg-config --cflags sdl2` `pkg-config --cflags SDL2_gfx` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Polygon.o source/Polygon.cpp
 
 ${OBJECTDIR}/source/Renderer.o: source/Renderer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
-	$(COMPILE.cc) -g `pkg-config --cflags sdl2` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Renderer.o source/Renderer.cpp
+	$(COMPILE.cc) -g `pkg-config --cflags sdl2` `pkg-config --cflags SDL2_gfx` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Renderer.o source/Renderer.cpp
 
 ${OBJECTDIR}/source/SdlManager.o: source/SdlManager.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
-	$(COMPILE.cc) -g `pkg-config --cflags sdl2` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/SdlManager.o source/SdlManager.cpp
+	$(COMPILE.cc) -g `pkg-config --cflags sdl2` `pkg-config --cflags SDL2_gfx` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/SdlManager.o source/SdlManager.cpp
 
 ${OBJECTDIR}/source/StarField.o: source/StarField.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
-	$(COMPILE.cc) -g `pkg-config --cflags sdl2` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/StarField.o source/StarField.cpp
+	$(COMPILE.cc) -g `pkg-config --cflags sdl2` `pkg-config --cflags SDL2_gfx` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/StarField.o source/StarField.cpp
 
 ${OBJECTDIR}/source/Timer.o: source/Timer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
-	$(COMPILE.cc) -g `pkg-config --cflags sdl2` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Timer.o source/Timer.cpp
+	$(COMPILE.cc) -g `pkg-config --cflags sdl2` `pkg-config --cflags SDL2_gfx` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Timer.o source/Timer.cpp
 
 ${OBJECTDIR}/source/Utility.o: source/Utility.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
-	$(COMPILE.cc) -g `pkg-config --cflags sdl2` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Utility.o source/Utility.cpp
+	$(COMPILE.cc) -g `pkg-config --cflags sdl2` `pkg-config --cflags SDL2_gfx` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Utility.o source/Utility.cpp
 
 ${OBJECTDIR}/source/main.o: source/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
-	$(COMPILE.cc) -g `pkg-config --cflags sdl2` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/main.o source/main.cpp
+	$(COMPILE.cc) -g `pkg-config --cflags sdl2` `pkg-config --cflags SDL2_gfx` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/main.o source/main.cpp
 
 # Subprojects
 .build-subprojects:

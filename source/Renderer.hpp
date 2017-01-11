@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include <memory>
 #include <vector>
 #include <SDL2/SDL_render.h>
 #include "Vec.hpp"
@@ -27,6 +28,16 @@ enum class Shape
 	LINES, POINTS
 };
 
+using colInt = uint32_t;
+
+constexpr uint32_t makeCol(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255)
+{
+	return (b << (0 * 8)) |
+			(g << (1 * 8)) |
+			(r << (2 * 8)) |
+			(a << (3 * 8));
+}
+
 class Renderer
 {
 public:
@@ -36,7 +47,8 @@ public:
 
 	void drawSingleLine(cint x1, cint y1, cint x2, cint y2);
 	void drawSinglePoint(cint x, cint y);
-	void drawSingleFillRect(cint x, cint y, cint w, cint h);
+	void drawFillSquare(cint x, cint y, cint rad, const colInt col);
+	void drawTri(const std::array<Vec2f, 3> &pts, const colInt col);
 
 	void beginPoints();
 	void addPoint(cint x, cint y);
