@@ -17,6 +17,7 @@
 
 #include "types.hpp"
 #include <SDL2/SDL_render.h>
+#include <SDL2/SDL2_gfxPrimitives.h>
 #include "Renderer.hpp"
 #include "SdlManager.hpp"
 
@@ -40,20 +41,19 @@ void Renderer::clear(cint r, cint g, cint b, cint a)
 	SDL_RenderClear(sdlRenderer);
 }
 
-void Renderer::drawSingleLine(cint x1, cint y1, cint x2, cint y2)
+void Renderer::drawSingleLine(cint x1, cint y1, cint x2, cint y2, const colInt col)
 {
-	SDL_RenderDrawLine(sdlRenderer, x1, y1, x2, y2);
+	lineColor(sdlRenderer, x1, y1, x2, y2, col);
 }
 
-void Renderer::drawSinglePoint(cint x, cint y)
+void Renderer::drawSinglePoint(cint x, cint y, const colInt col)
 {
-	SDL_RenderDrawPoint(sdlRenderer, x, y);
+	pixelColor(sdlRenderer, x, y, col);
 }
 
-void Renderer::drawSingleFillRect(cint x, cint y, cint w, cint h)
+void Renderer::drawFillSquare(cint x, cint y, cint rad, const colInt col)
 {
-	SDL_Rect rect{x, y, w, h};
-	SDL_RenderFillRect(sdlRenderer, &rect);
+	boxColor(sdlRenderer, x, y, x + rad - 1, y + rad - 1, col);
 }
 
 void Renderer::beginPoints()
