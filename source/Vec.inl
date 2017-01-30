@@ -108,5 +108,13 @@ OP_ARITH(|, N)
 #define _MAG_FN_Z_3 +z*z
 #define CREATE_MAG_FN(N) _MAG_FN(_MAG_FN_Z_##N)
 
+#define _DOT_FN(TN, Z) T dotP(const TN&o)const{return x*o.x+y*o.y Z;}
+#define _DOT_FN_Z_2
+#define _DOT_FN_Z_3 +z*o.z
+#define CREATE_DOT_FN(N) _DOT_FN(_TYPE_VEC_##N,_DOT_FN_Z_##N)
+
+#define _CROSS_FN_3(TN) TN crossP(const TN&o)const{return {y*o.z-z*o.y,z*o.x-x*o.z,x*o.y-y*o.x};}
+#define CREATE_CROSS_FN(N) _CROSS_FN_##N(_TYPE_VEC_##N)
+
 #define _CREATE_ALIAS(ST, T, N) using Vec##N##ST=Vec##N<T>;using cVec##N##ST=const Vec##N<T>;
 #define CREATE_ALIAS(ST, T) _CREATE_ALIAS(ST,T,2)_CREATE_ALIAS(ST,T,3)
