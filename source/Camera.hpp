@@ -32,12 +32,21 @@ class Camera
 	static constexpr float turnSpeed = pi;
 
 public:
+	static constexpr float viewDist = 1000;
+	
+	class ProjectedPoint
+	{
+	public:
+		Vec2f pt;
+		bool onScreen;
+	};
+	
 	Camera(const Vec2i &size);
 	void recalcFov(cint sx, cint sy);
 	void update(cfloat dt, const InputManager &inputManager);
 	cVec2f &getFov() const;
 	cVec3f &getPos() const;
-	Vec2f projectPoint(cVec3f &p, cVec2f &canvasSize) const;
+	ProjectedPoint projectPoint(cVec3f &p, cVec2f &canvasSize) const;
 
 private:
 	void resize(cint sx, cint sy);

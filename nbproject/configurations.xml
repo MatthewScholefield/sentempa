@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>source/Camera.hpp</itemPath>
       <itemPath>source/InputManager.hpp</itemPath>
+      <itemPath>source/Polygon.hpp</itemPath>
       <itemPath>source/Renderer.hpp</itemPath>
       <itemPath>source/SdlManager.hpp</itemPath>
       <itemPath>source/StarField.hpp</itemPath>
@@ -24,6 +25,7 @@
                    projectFiles="true">
       <itemPath>source/Camera.cpp</itemPath>
       <itemPath>source/InputManager.cpp</itemPath>
+      <itemPath>source/Polygon.cpp</itemPath>
       <itemPath>source/Renderer.cpp</itemPath>
       <itemPath>source/SdlManager.cpp</itemPath>
       <itemPath>source/StarField.cpp</itemPath>
@@ -61,6 +63,7 @@
         <linkerTool>
           <linkerLibItems>
             <linkerOptionItem>`pkg-config --libs sdl2`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs SDL2_gfx`</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -71,6 +74,10 @@
       <item path="source/InputManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/InputManager.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/Polygon.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Polygon.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="source/Renderer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -129,6 +136,10 @@
       <item path="source/InputManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/InputManager.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/Polygon.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Polygon.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="source/Renderer.cpp" ex="false" tool="1" flavor2="0">
       </item>

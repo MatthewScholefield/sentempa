@@ -56,6 +56,11 @@ void Renderer::drawFillSquare(cint x, cint y, cint rad, const colInt col)
 	boxColor(sdlRenderer, x, y, x + rad - 1, y + rad - 1, col);
 }
 
+void Renderer::drawFillTri(const std::array<Vec2f, 3>& pts, const colInt col)
+{
+	filledTrigonColor(sdlRenderer, pts[0].x, pts[0].y, pts[1].x, pts[1].y, pts[2].x, pts[2].y, col);
+}
+
 void Renderer::beginPoints()
 {
 	points.clear();

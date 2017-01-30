@@ -27,7 +27,7 @@ void StarField::refill(const Camera &camera)
 {
 	auto shouldRemove = [&camera](const Star & star)
 	{
-		return (star.p - camera.getPos()).abs().max() > maxDepth;
+		return (star.p - camera.getPos()).abs().max() > Camera::viewDist;
 	};
 	stars.erase(std::remove_if(stars.begin(), stars.end(), shouldRemove),
 				stars.end());
@@ -38,9 +38,9 @@ void StarField::refill(const Camera &camera)
 		return;
 
 	Box newBox = {
-		camera.getPos() - maxDepth,
+		camera.getPos() - Camera::viewDist,
 		{
-			maxDepth * 2, maxDepth * 2, maxDepth * 2
+			Camera::viewDist * 2, Camera::viewDist * 2, Camera::viewDist * 2
 		}
 	};
 
@@ -93,9 +93,10 @@ void StarField::render(Renderer &renderer, const Camera &camera) const
 	const auto canvasSize = renderer.getSize().cast<float>();
 	for (const Star &i : stars)
 	{
-		cVec2f pt = camera.projectPoint(i.p, canvasSize);
-		if (std::isnan(pt.x))
+		cauto proj = camera.projectPoint(i.p, canvasSize);
+		if (!proj.onScreen)
 			continue;
+		cauto pt = proj.pt;
 
 		cfloat dist = i.p.dist(camera.getPos());
 		cint squareSize = dist == 0.f ? 0 : std::max(1.f, starSize / dist);
@@ -104,7 +105,7 @@ void StarField::render(Renderer &renderer, const Camera &camera) const
 				pt.y + squareSize < 0.f || pt.y >= canvasSize.y)
 			continue;
 
-		int alpha = 255.f * (1.f - dist / (sqrt(maxDepth * maxDepth)));
+		int alpha = 255.f * (1.f - dist / Camera::viewDist);
 		if (alpha <= 0)
 			continue;
 
@@ -121,8 +122,7 @@ void StarField::render(Renderer &renderer, const Camera &camera) const
 			b += twinkle;
 		}
 
-		renderer.setColor(r, g, b, alpha);
-		renderer.drawSingleFillRect(pt.x, pt.y, squareSize, squareSize);
+		renderer.drawFillSquare(pt.x, pt.y, squareSize, makeCol(r, g, b, alpha));
 	}
 }
 

@@ -141,7 +141,7 @@ cVec3f &Camera::getPos() const
 	return pos;
 }
 
-Vec2f Camera::projectPoint(cVec3f &point, cVec2f &canvasSize) const
+Camera::ProjectedPoint Camera::projectPoint(cVec3f &point, cVec2f &canvasSize) const
 {
 	Vec3f d = point - pos; // Delta
 	Vec3f rotated;
@@ -158,11 +158,14 @@ Vec2f Camera::projectPoint(cVec3f &point, cVec2f &canvasSize) const
 			d.x * -cx * sy + d.y * sx + d.z * cx * cy
 		};
 	}
+	Vec2f pt = (Vec2f(rotated.x, rotated.y) / (fov * rotated.z) + 0.5f) * canvasSize;
+	bool otherSide = rotated.z < 0;
+	if (otherSide)
+		pt *= -1.f;
 
-	if (rotated.z < 0)
-		return Vec2f(std::numeric_limits<float>::quiet_NaN(),
-					std::numeric_limits<float>::quiet_NaN());
-
-	return (Vec2f(rotated.x, rotated.y) / (fov * rotated.z) + 0.5f) * canvasSize;
+	return
+	{
+		pt, !otherSide
+	};
 }
 

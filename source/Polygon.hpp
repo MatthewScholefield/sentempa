@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Matthew D. Scholefield
+ * Copyright (C) 2017 Matthew D. Scholefield
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,41 +17,41 @@
 
 #pragma once
 
+#include <memory>
 #include <vector>
-
 #include "Vec.hpp"
-#include "types.hpp"
+#include "Renderer.hpp"
 
 class Renderer;
 class Camera;
 
-class StarField
+enum class RenderOrder
+{
+	before,
+	after,
+	either
+};
+
+class Triangle
 {
 public:
-	void refill(const Camera &camera);
-	void update(cfloat dt, const Camera &camera);
-	void render(Renderer &renderer, const Camera &camera) const;
-	
+	Triangle(const Vec3<uint8_t> &color, const std::array<size_t, 3> &ids);
+	void draw(Renderer &renderer, const Camera &camera, const std::vector<Vec3f> &pts) const;
+	RenderOrder calcRenderOrder(const Triangle &other, const Camera &camera, const std::vector<Vec3f> &pts) const;
+
 private:
-	static constexpr int maxStars = 20000;
-	static constexpr float starSize = 800.f;
+	Vec3<uint8_t> color;
+	std::array<size_t, 3> ids;
+};
 
-	class Star
-	{
-	public:
-		void update(cfloat dt);
-		bool shouldRemove(const Vec2i &size) const;
-		Vec3f p;
-	};
-	std::vector<Star> stars;
+class Polygon
+{
+public:
+	Polygon();
+	void render(Renderer &renderer, const Camera &camera) const;
+	void definePoint(size_t id, const Vec3f &pt);
 
-	class Box
-	{
-	public:
-		Vec3f pos;
-		Vec3f size;
-	};
-
-	// Area containing all existing stars
-	Box box;
+private:
+	std::vector<Vec3f> pts;
+	std::vector<Triangle> triangles;
 };

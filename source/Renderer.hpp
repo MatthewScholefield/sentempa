@@ -32,11 +32,11 @@ using colInt = uint32_t;
 
 // Used to concatenate 8 bit color values into a single 32 bit int
 
-constexpr uint32_t makeCol(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255)
+constexpr colInt makeCol(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255)
 {
-	return (b << (0 * 8)) |
+	return (r << (0 * 8)) |
 			(g << (1 * 8)) |
-			(r << (2 * 8)) |
+			(b << (2 * 8)) |
 			(a << (3 * 8));
 }
 
@@ -50,6 +50,7 @@ public:
 	void drawSingleLine(cint x1, cint y1, cint x2, cint y2, const colInt col);
 	void drawSinglePoint(cint x, cint y, const colInt col);
 	void drawFillSquare(cint x, cint y, cint rad, const colInt col);
+	void drawFillTri(const std::array<Vec2f, 3> &pts, const colInt col);
 
 	void beginPoints();
 	void addPoint(cint x, cint y);
