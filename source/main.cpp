@@ -35,7 +35,37 @@ int main()
 	StarField starField;
 	InputManager inputManager;
 	Timer timer;
+	
 	Polygon poly;
+	poly.definePoint(0,{40, 0, 40});
+	poly.definePoint(1,{80, 0, 100});
+	poly.definePoint(2,{100, 0, 80});
+	poly.definePoint(3,{55, -10, 55});
+	
+	poly.addFace({
+		{100, 95, 95},
+		{
+			{0, 1, 2}
+		}
+	});
+	poly.addFace({
+		{200, 20, 0},
+		{
+			{0, 1, 3}
+		}
+	});
+	poly.addFace({
+		{220, 20, 0},
+		{
+			{0, 2, 3}
+		}
+	});
+	poly.addFace({
+		{160, 10, 0},
+		{
+			{1, 2, 3}
+		}
+	});
 
 	while (!SdlManager::shouldQuit())
 	{

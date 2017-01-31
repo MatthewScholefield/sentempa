@@ -49,7 +49,7 @@ void Triangle::draw(Renderer& renderer, const Camera &camera, const std::vector<
 	renderer.drawFillTri(triPts, makeCol(color.x, color.y, color.z, alpha));
 }
 
-int t=0;
+int t = 0;
 
 RenderOrder Triangle::calcRenderOrder(const Triangle& other, const Camera& camera, const std::vector<Vec3f>& pts) const
 {
@@ -116,40 +116,6 @@ RenderOrder Triangle::calcRenderOrder(const Triangle& other, const Camera& camer
 	return mAngle < oAngle ? RenderOrder::before : RenderOrder::after;
 }
 
-Polygon::Polygon()
-{
-
-	definePoint(0,{0, 0, 0});
-	definePoint(1,{0, 0, 100});
-	definePoint(2,{0, 100, 0});
-	definePoint(3,{100, 0, 0});
-
-	triangles.push_back({
-		{220, 20, 10},
-		{
-			{0, 1, 2}
-		}
-	});
-	triangles.push_back({
-		{20, 220, 10},
-		{
-			{0, 1, 3}
-		}
-	});
-	triangles.push_back({
-		{20, 10, 220},
-		{
-			{0, 2, 3}
-		}
-	});
-	triangles.push_back({
-		{220, 160, 0},
-		{
-			{1, 2, 3}
-		}
-	});
-}
-
 void Polygon::render(Renderer &renderer, const Camera &camera) const
 {
 	using Entry = std::pair<size_t, float>;
@@ -179,4 +145,8 @@ void Polygon::definePoint(size_t id, const Vec3f& pt)
 	pts.emplace_back(pt);
 }
 
+void Polygon::addFace(const Triangle &tri)
+{
+	triangles.push_back(tri);
+}
 

@@ -47,9 +47,9 @@ private:
 class Polygon
 {
 public:
-	Polygon();
 	void render(Renderer &renderer, const Camera &camera) const;
 	void definePoint(size_t id, const Vec3f &pt);
+	void addFace(const Triangle &tri);
 
 private:
 	std::vector<Vec3f> pts;
