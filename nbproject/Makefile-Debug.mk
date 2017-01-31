@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/source/Camera.o \
+	${OBJECTDIR}/source/Enemy.o \
 	${OBJECTDIR}/source/InputManager.o \
 	${OBJECTDIR}/source/Polygon.o \
 	${OBJECTDIR}/source/Renderer.o \
@@ -74,6 +75,11 @@ ${OBJECTDIR}/source/Camera.o: source/Camera.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
 	$(COMPILE.cc) -g `pkg-config --cflags sdl2` `pkg-config --cflags SDL2_gfx` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Camera.o source/Camera.cpp
+
+${OBJECTDIR}/source/Enemy.o: source/Enemy.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	${RM} "$@.d"
+	$(COMPILE.cc) -g `pkg-config --cflags sdl2` `pkg-config --cflags SDL2_gfx` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Enemy.o source/Enemy.cpp
 
 ${OBJECTDIR}/source/InputManager.o: source/InputManager.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
