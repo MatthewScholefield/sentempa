@@ -128,7 +128,7 @@ void Polygon::render(Renderer &renderer, const Camera &camera) const
 			p.x * -cx * sy + p.y * sx + p.z * cx * cy
 		};
 
-		p -= pos;
+		p += pos;
 	}
 
 	using Entry = std::pair<size_t, float>;

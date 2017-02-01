@@ -31,6 +31,11 @@ public:
 	void update(cfloat dt, const Camera &camera);
 
 private:
+	struct
+	{
+		Vec2f pos, vel, acc;
+	} rot; // Rotation
+	Vec3f pos;
 	Polygon poly;
 	static Polygon createShape(cint r, cint g, cint b);
 };

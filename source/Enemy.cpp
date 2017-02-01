@@ -28,11 +28,12 @@ void Enemy::render(Renderer& renderer, const Camera& camera)
 
 void Enemy::update(cfloat dt, const Camera &camera)
 {
-	Vec3f d = camera.getPos() - poly.pos; // Delta
+	Vec3f d = camera.getPos() - pos; // Delta
+	pos += d*0.5f * dt;
 	Vec3f rotated;
 	{
-		const float rotX = poly.rot.y;
-		const float rotY = poly.rot.x;
+		const float rotX = rot.pos.y;
+		const float rotY = rot.pos.x;
 
 		const float sx = sin(rotX), cx = cos(rotX);
 		const float sy = sin(rotY), cy = cos(rotY);
@@ -44,7 +45,15 @@ void Enemy::update(cfloat dt, const Camera &camera)
 		};
 	}
 	
-	poly.rot.x += rotated.x > 0 ? dt : -dt;
+	rot.acc.x = rotated.x > 0 ? 1.5f : -1.5f;
+	rot.acc.y = rotated.y > 0 ? 1.5f : -1.5f;
+	
+	rot.vel *= pow(0.3f, dt); // TODO: Implement shared set of physics constants
+	rot.vel += rot.acc * dt;
+	rot.pos += rot.vel * dt;
+	
+	poly.pos = pos;
+	poly.rot = rot.pos;
 }
 
 Polygon Enemy::createShape(cint r, cint g, cint b)
