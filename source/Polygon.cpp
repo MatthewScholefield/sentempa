@@ -108,11 +108,6 @@ RenderOrder Triangle::calcRenderOrder(const Triangle& other, const Camera& camer
 				std::to_string(a.z);
 	};
 
-	auto tsIds = [&](const std::array<size_t, 3> &ids)
-	{
-		return "{(" + ts(pts[ids[0]]) + "), (" + ts(pts[ids[1]]) + "), (" + ts(pts[ids[2]]) + ")}";
-	};
-
 	return mAngle < oAngle ? RenderOrder::before : RenderOrder::after;
 }
 
