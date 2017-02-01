@@ -21,6 +21,7 @@
 #include <vector>
 #include "Vec.hpp"
 #include "Renderer.hpp"
+#include "Utility.hpp"
 
 class Renderer;
 class Camera;
@@ -49,8 +50,11 @@ class Polygon
 public:
 	void render(Renderer &renderer, const Camera &camera) const;
 	void definePoint(size_t id, const Vec3f &pt);
+	void centerPoints();
 	void addFace(const Triangle &tri);
 
+	Vec3f pos;
+	Vec2f rot;
 private:
 	std::vector<Vec3f> pts;
 	std::vector<Triangle> triangles;

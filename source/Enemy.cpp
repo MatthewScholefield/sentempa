@@ -17,6 +17,7 @@
 
 #include "Enemy.hpp"
 #include "Polygon.hpp"
+#include "Camera.hpp"
 
 Enemy::Enemy(cint r, cint g, cint b) : poly(createShape(r, g, b)) { }
 
@@ -25,13 +26,35 @@ void Enemy::render(Renderer& renderer, const Camera& camera)
 	poly.render(renderer, camera);
 }
 
+void Enemy::update(cfloat dt, const Camera &camera)
+{
+	Vec3f d = camera.getPos() - poly.pos; // Delta
+	Vec3f rotated;
+	{
+		const float rotX = poly.rot.y;
+		const float rotY = poly.rot.x;
+
+		const float sx = sin(rotX), cx = cos(rotX);
+		const float sy = sin(rotY), cy = cos(rotY);
+
+		rotated = {
+			d.x * cy + d.y * sx * sy + d.z * cx * sy,
+			d.y * cx + d.z * -sx,
+			d.x * -sy + d.y * cy * sx + d.z * cx * cy
+		};
+	}
+	
+	poly.rot.x += rotated.x > 0 ? dt : -dt;
+}
+
 Polygon Enemy::createShape(cint r, cint g, cint b)
 {
 	Polygon poly;
-	poly.definePoint(0,{40, 0, 40});
-	poly.definePoint(1,{80, 0, 100});
-	poly.definePoint(2,{100, 0, 80});
-	poly.definePoint(3,{55, -10, 55});
+	poly.definePoint(0,{0, 0, 0});
+	poly.definePoint(1,{-15, 0, 70});
+	poly.definePoint(2,{15, 0, 70});
+	poly.definePoint(3,{0, -10, 15});
+	poly.centerPoints();
 
 	poly.addFace({
 		{(unsigned char) (95 + r * 5 / 255), (unsigned char) (95 + g * 5 / 255), (unsigned char) (95 + b * 5 / 255)},

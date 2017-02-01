@@ -48,6 +48,7 @@ int main()
 		inputManager.update();
 		starField.update(dt, camera);
 		camera.update(dt, inputManager);
+		enemy.update(dt, camera);
 
 		// Render
 		renderer.clear(0, 0, 0);

@@ -28,6 +28,7 @@ class Enemy
 public:
 	Enemy(cint r, cint g, cint b);
 	void render(Renderer &renderer, const Camera &camera);
+	void update(cfloat dt, const Camera &camera);
 
 private:
 	Polygon poly;

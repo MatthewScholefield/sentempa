@@ -113,6 +113,24 @@ RenderOrder Triangle::calcRenderOrder(const Triangle& other, const Camera& camer
 
 void Polygon::render(Renderer &renderer, const Camera &camera) const
 {
+	std::vector<Vec3f> newPts(pts.begin(), pts.end());
+	for (Vec3f &p : newPts)
+	{
+		const float rotX = -rot.y;
+		const float rotY = -rot.x;
+
+		const float sx = sin(rotX), cx = cos(rotX);
+		const float sy = sin(rotY), cy = cos(rotY);
+
+		p = {
+			p.x * cy + p.z * sy,
+			p.x * sx * sy + p.y * cx - p.z * sx * cy,
+			p.x * -cx * sy + p.y * sx + p.z * cx * cy
+		};
+
+		p -= pos;
+	}
+
 	using Entry = std::pair<size_t, float>;
 	std::vector<size_t> renderOrder;
 	renderOrder.reserve(triangles.size());
@@ -121,7 +139,7 @@ void Polygon::render(Renderer &renderer, const Camera &camera) const
 		auto it = renderOrder.begin();
 		for (;; ++it)
 		{
-			if (it == renderOrder.end() || triangles[i].calcRenderOrder(triangles[*it], camera, pts) == RenderOrder::before)
+			if (it == renderOrder.end() || triangles[i].calcRenderOrder(triangles[*it], camera, newPts) == RenderOrder::before)
 			{
 				renderOrder.insert(it, i);
 				break;
@@ -130,7 +148,7 @@ void Polygon::render(Renderer &renderer, const Camera &camera) const
 	}
 
 	for (auto it = renderOrder.rbegin(); it != renderOrder.rend(); ++it)
-		triangles[*it].draw(renderer, camera, pts);
+		triangles[*it].draw(renderer, camera, newPts);
 }
 
 void Polygon::definePoint(size_t id, const Vec3f& pt)
@@ -138,6 +156,16 @@ void Polygon::definePoint(size_t id, const Vec3f& pt)
 	if (id != pts.size())
 		throw std::logic_error("Point ids not in consecutive order!");
 	pts.emplace_back(pt);
+}
+
+void Polygon::centerPoints()
+{
+	Vec3f av;
+	for (cauto &i : pts)
+		av += i;
+	av /= pts.size();
+	for (auto &i : pts)
+		i -= av;
 }
 
 void Polygon::addFace(const Triangle &tri)
