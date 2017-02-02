@@ -26,7 +26,7 @@ class Camera;
 class Enemy
 {
 public:
-	Enemy(cint r, cint g, cint b);
+	Enemy(cint r, cint g, cint b, const Vec3f pos);
 	void render(Renderer &renderer, const Camera &camera);
 	void update(cfloat dt, const Camera &camera);
 

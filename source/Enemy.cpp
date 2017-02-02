@@ -19,7 +19,7 @@
 #include "Polygon.hpp"
 #include "Camera.hpp"
 
-Enemy::Enemy(cint r, cint g, cint b) : poly(createShape(r, g, b)) { }
+Enemy::Enemy(cint r, cint g, cint b, const Vec3f pos) : poly(createShape(r, g, b)), pos(pos) { }
 
 void Enemy::render(Renderer& renderer, const Camera& camera)
 {
@@ -72,7 +72,7 @@ Polygon Enemy::createShape(cint r, cint g, cint b)
 		}
 	});
 	poly.addFace({
-		{(unsigned char) (200 * r / 255), (unsigned char) (200 * g / 255), (unsigned char) (200 * b / 255)},
+		{(unsigned char) (190 * r / 255), (unsigned char) (200 * g / 255), (unsigned char) (200 * b / 255)},
 		{
 			{0, 1, 3}
 		}
@@ -84,7 +84,7 @@ Polygon Enemy::createShape(cint r, cint g, cint b)
 		}
 	});
 	poly.addFace({
-		{(unsigned char) (160 * r / 255), (unsigned char) (160 * g / 255), (unsigned char) (160 * b / 255)},
+		{(unsigned char) (140 * r / 255), (unsigned char) (160 * g / 255), (unsigned char) (160 * b / 255)},
 		{
 			{1, 2, 3}
 		}

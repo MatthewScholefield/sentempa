@@ -36,7 +36,12 @@ int main()
 	StarField starField;
 	InputManager inputManager;
 	Timer timer;
-	Enemy enemy(255, 20, 0);
+	
+	std::vector<Enemy> enemies;
+	auto space = (Vec3i() + 2 * Camera::viewDist);
+	enemies.emplace_back(255, 20, 0, (space.rand() - Camera::viewDist).cast<float>());
+	enemies.emplace_back(0, 255, 40, (space.rand() - Camera::viewDist).cast<float>());
+	enemies.emplace_back(40, 0, 255, (space.rand() - Camera::viewDist).cast<float>());
 
 
 	while (!SdlManager::shouldQuit())
@@ -48,12 +53,14 @@ int main()
 		inputManager.update();
 		starField.update(dt, camera);
 		camera.update(dt, inputManager);
-		enemy.update(dt, camera);
+		for(auto &i : enemies)
+			i.update(dt, camera);
 
 		// Render
 		renderer.clear(0, 0, 0);
 		starField.render(renderer, camera);
-		enemy.render(renderer, camera);
+		for(auto &i : enemies)
+			i.render(renderer, camera);
 		renderer.draw();
 	}
 
