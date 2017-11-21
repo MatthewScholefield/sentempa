@@ -1,5 +1,5 @@
 # Sentempa
-Sentempa is a unique 3D space game in that the rendering is has been coded from scratch (using SDL2). As a result, in part due to the simplicity of the game, the preformance is silky smooth.
+Sentempa is a unique 3D space game in that the rendering is has been coded from scratch (using SDL2). As a result, in part due to the simplicity of the game, the performance is silky smooth.
 
 [![screenshot]][video]
 
