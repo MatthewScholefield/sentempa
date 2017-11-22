@@ -19,7 +19,8 @@
 #include "Polygon.hpp"
 #include "Camera.hpp"
 
-Enemy::Enemy(cint r, cint g, cint b, const Vec3f pos) : poly(createShape(r, g, b)), pos(pos) { }
+Enemy::Enemy(cint r, cint g, cint b, const Vec3f pos, cfloat rotSpeed, cfloat speed) :
+poly(createShape(r, g, b)), pos(pos), rotSpeed(rotSpeed), speed(speed) { }
 
 void Enemy::render(Renderer& renderer, const Camera& camera)
 {
@@ -29,7 +30,7 @@ void Enemy::render(Renderer& renderer, const Camera& camera)
 void Enemy::update(cfloat dt, const Camera &camera)
 {
 	Vec3f d = camera.getPos() - pos; // Delta
-	pos += d*0.5f * dt;
+	pos += (d * speed * dt) / d.mag();
 	Vec3f rotated;
 	{
 		const float rotX = rot.pos.y;
@@ -45,8 +46,8 @@ void Enemy::update(cfloat dt, const Camera &camera)
 		};
 	}
 	
-	rot.acc.x = rotated.x > 0 ? 1.5f : -1.5f;
-	rot.acc.y = rotated.y > 0 ? 1.5f : -1.5f;
+	rot.acc.x = rotated.x > 0 ? rotSpeed : -rotSpeed;
+	rot.acc.y = rotated.y > 0 ? rotSpeed : -rotSpeed;
 	
 	rot.vel *= pow(0.3f, dt); // TODO: Implement shared set of physics constants
 	rot.vel += rot.acc * dt;
