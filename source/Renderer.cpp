@@ -110,6 +110,8 @@ Renderer::RenderShapesFunc Renderer::getShapesFunc(Shape shape) const
 		return &SDL_RenderDrawLines;
 	case Shape::POINTS:
 		return &SDL_RenderDrawPoints;
+    default:
+        throw std::runtime_error("Invalid shape");
 	}
 }
 
