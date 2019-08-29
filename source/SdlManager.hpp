@@ -7,8 +7,8 @@
 #include "types.hpp"
 
 class SdlManager {
-    SdlManager() = delete;
 public:
+    SdlManager() = delete;
     using KeyChangeFunc = std::function<void(const SDL_Keycode, cbool keyDown)>;
     using ResizeFunc = std::function<void(cint, cint)>;
 
@@ -18,8 +18,8 @@ public:
     static SDL_Renderer *getSdlRenderer();
     static void update();
     static bool shouldQuit();
-    static void onKeyChange(const KeyChangeFunc func);
-    static void onResize(const ResizeFunc func);
+    static void onKeyChange(KeyChangeFunc func);
+    static void onResize(ResizeFunc func);
 
 private:
     static cint screenWidth = 640;

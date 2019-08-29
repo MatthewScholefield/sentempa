@@ -17,11 +17,10 @@ int main() {
     Timer timer;
 
     std::vector<Enemy> enemies;
-    auto space = (Vec3i() + 2 * Camera::viewDist);
+    auto space = Vec3i(2 * Camera::viewDist);
     enemies.emplace_back(255, 20, 0, (space.rand() - Camera::viewDist).cast<float>(), 0.8f, 80);
     enemies.emplace_back(0, 255, 40, (space.rand() - Camera::viewDist).cast<float>(), 0.5f, 50);
     enemies.emplace_back(40, 0, 255, (space.rand() - Camera::viewDist).cast<float>(), 1.2f, 100);
-
 
     while (!SdlManager::shouldQuit()) {
         float dt = timer.restart();

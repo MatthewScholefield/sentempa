@@ -27,8 +27,8 @@ class InputManager {
 public:
     InputManager();
 
-    void onKeyDown(const SDL_Keycode key, cbool keyDown);
-    bool isKeyPressed(const Key key) const;
+    void onKeyDown(SDL_Keycode key, cbool keyDown);
+    bool isKeyPressed(Key key) const;
     void update();
     int getMouseDx() const;
     int getMouseDy() const;

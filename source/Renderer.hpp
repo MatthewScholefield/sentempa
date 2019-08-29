@@ -24,13 +24,13 @@ constexpr colInt makeCol(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255) {
 class Renderer {
 public:
     Renderer(SDL_Renderer *sdlRenderer, const Vec2i &size);
-    void setColor(cint r, cint g, cint b, cint a = 255);
-    void clear(cint r = 0, cint g = 0, cint b = 0, cint a = 255);
+    void setColor(cuint8 r, cuint8 g, cuint8 b, cuint8 a = 255);
+    void clear(cuint8 r = 0, cuint8 g = 0, cuint8 b = 0, cuint8 a = 255);
 
-    void drawSingleLine(cint x1, cint y1, cint x2, cint y2, const colInt col);
-    void drawSinglePoint(cint x, cint y, const colInt col);
-    void drawFillSquare(cint x, cint y, cint rad, const colInt col);
-    void drawFillTri(const std::array<Vec2f, 3> &pts, const colInt col);
+    void drawSingleLine(cint16 x1, cint16 y1, cint16 x2, cint16 y2, colInt col);
+    void drawSinglePoint(cint16 x, cint16 y, colInt col);
+    void drawFillSquare(cint16 x, cint16 y, cint16 rad, colInt col);
+    void drawFillTri(const std::array<Vec2f, 3> &pts, colInt col);
 
     void beginPoints();
     void addPoint(cint x, cint y);

@@ -9,7 +9,7 @@ class Camera;
 
 class Enemy {
 public:
-    Enemy(cint r, cint g, cint b, const Vec3f pos, cfloat rotSpeed, cfloat speed);
+    Enemy(cint r, cint g, cint b, Vec3f pos, cfloat rotSpeed, cfloat speed);
     void render(Renderer &renderer, const Camera &camera);
     void update(cfloat dt, const Camera &camera);
 

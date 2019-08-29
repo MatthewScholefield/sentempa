@@ -22,7 +22,6 @@ private:
     class Star {
     public:
         void update(cfloat dt);
-        bool shouldRemove(const Vec2i &size) const;
         Vec3f p;
     };
 

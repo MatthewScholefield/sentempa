@@ -42,12 +42,13 @@ void StarField::refill(const Camera &camera) {
     }
 
     float totalVolume = 0.f;
-    std::array<float, boxes.size()> volumes;
-    for (int i = 0; i < volumes.size(); ++i)
+    std::array<float, boxes.size()> volumes{};
+    for (int i = 0; i < volumes.size(); ++i) {
         totalVolume += (volumes[i] = boxes[i].size.volume());
+    }
 
     for (int i = 0; i < boxes.size(); ++i) {
-        cint numStars = std::round(starsToCreate * volumes[i] / totalVolume);
+        cint numStars = int(std::round(starsToCreate * volumes[i] / totalVolume));
         const auto size = boxes[i].size.cast<int>();
         for (int j = 0; j < numStars; ++j)
             stars.push_back({boxes[i].pos + size.max(1).rand().cast<float>()});
@@ -71,17 +72,17 @@ void StarField::render(Renderer &renderer, const Camera &camera) const {
         cauto pt = proj.pt;
 
         cfloat dist = i.p.dist(camera.getPos());
-        cint squareSize = dist == 0.f ? 0 : std::max(1.f, starSize / dist);
+        auto squareSize = cint16(dist == 0.f ? 0 : std::max(1.f, starSize / dist));
 
         if (pt.x + squareSize < 0.f || pt.x >= canvasSize.x ||
             pt.y + squareSize < 0.f || pt.y >= canvasSize.y)
             continue;
 
-        int alpha = 255.f * (1.f - dist / Camera::viewDist);
-        if (alpha <= 0)
+        float alpha = 255.f * (1.f - dist / Camera::viewDist);
+        if (alpha <= 0.f)
             continue;
 
-        int r = 255, g = 255, b = 255;
+        uint8_t r = 255, g = 255, b = 255;
         cint twinkle = rand() % 301 - 150;
         if (twinkle > 0) {
             r -= twinkle;
@@ -91,14 +92,8 @@ void StarField::render(Renderer &renderer, const Camera &camera) const {
             b += twinkle;
         }
 
-        renderer.drawFillSquare(pt.x, pt.y, squareSize, makeCol(r, g, b, alpha));
+        renderer.drawFillSquare(cint16(pt.x), cint16(pt.y), squareSize, makeCol(r, g, b, uint8_t(alpha)));
     }
 }
 
 void StarField::Star::update(cfloat dt) {}
-
-bool StarField::Star::shouldRemove(const Vec2i &size) const {
-    return p.x < 0 || p.x >= size.x ||
-           p.y < 0 || p.y >= size.y;
-}
-

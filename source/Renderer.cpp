@@ -11,29 +11,32 @@ Renderer::Renderer(SDL_Renderer *sdlRenderer, const Vec2i &size) :
     });
 }
 
-void Renderer::setColor(cint r, cint g, cint b, cint a) {
+void Renderer::setColor(cuint8 r, cuint8 g, cuint8 b, cuint8 a) {
     SDL_SetRenderDrawColor(sdlRenderer, r, g, b, a);
 }
 
-void Renderer::clear(cint r, cint g, cint b, cint a) {
+void Renderer::clear(cuint8 r, cuint8 g, cuint8 b, cuint8 a) {
     setColor(r, g, b, a);
     SDL_RenderClear(sdlRenderer);
 }
 
-void Renderer::drawSingleLine(cint x1, cint y1, cint x2, cint y2, const colInt col) {
+void Renderer::drawSingleLine(cint16 x1, cint16 y1, cint16 x2, cint16 y2, const colInt col) {
     lineColor(sdlRenderer, x1, y1, x2, y2, col);
 }
 
-void Renderer::drawSinglePoint(cint x, cint y, const colInt col) {
+void Renderer::drawSinglePoint(cint16 x, cint16 y, const colInt col) {
     pixelColor(sdlRenderer, x, y, col);
 }
 
-void Renderer::drawFillSquare(cint x, cint y, cint rad, const colInt col) {
-    boxColor(sdlRenderer, x, y, x + rad - 1, y + rad - 1, col);
+void Renderer::drawFillSquare(cint16 x, cint16 y, cint16 rad, const colInt col) {
+    boxColor(sdlRenderer, x, y, cint16(x + rad - 1), cint16(y + rad - 1), col);
 }
 
 void Renderer::drawFillTri(const std::array<Vec2f, 3> &pts, const colInt col) {
-    filledTrigonColor(sdlRenderer, pts[0].x, pts[0].y, pts[1].x, pts[1].y, pts[2].x, pts[2].y, col);
+    filledTrigonColor(sdlRenderer,
+                      cint16(pts[0].x), cint16(pts[0].y),
+                      cint16(pts[1].x), cint16(pts[1].y),
+                      cint16(pts[2].x), cint16(pts[2].y), col);
 }
 
 void Renderer::beginPoints() {
@@ -46,7 +49,7 @@ void Renderer::addPoint(cint x, cint y) {
 
 void Renderer::endPoints(Shape shape) {
     auto func = getShapesFunc(shape);
-    func(sdlRenderer, points.data(), points.size());
+    func(sdlRenderer, points.data(), int(points.size()));
 }
 
 void Renderer::draw() {

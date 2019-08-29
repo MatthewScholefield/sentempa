@@ -13,7 +13,7 @@ class Camera {
     static constexpr float moveSpeed = 200.f;
     static constexpr float turnSpeed = pi;
 public:
-    static constexpr float viewDist = 1000;
+    static constexpr int viewDist = 1000;
 
 
     class ProjectedPoint {
@@ -22,7 +22,7 @@ public:
         bool onScreen;
     };
 
-    Camera(const Vec2i &size);
+    explicit Camera(const Vec2i &size);
     void recalcFov(cint sx, cint sy);
     void update(cfloat dt, const InputManager &inputManager);
     cVec2f &getFov() const;
