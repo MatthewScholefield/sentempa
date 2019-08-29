@@ -1,4 +1,8 @@
-nbproject/private/
+nbproject/
+.idea/
 build/
 dist/
 .dep.inc
+cmake-build-*/
+*~
+
