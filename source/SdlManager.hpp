@@ -6,30 +6,29 @@
 #include "Vec.hpp"
 #include "types.hpp"
 
-class SdlManager
-{
-	SdlManager() = delete;
+class SdlManager {
+    SdlManager() = delete;
 public:
-	using KeyChangeFunc = std::function<void(const SDL_Keycode, cbool keyDown)>;
-	using ResizeFunc = std::function<void(cint, cint) >;
+    using KeyChangeFunc = std::function<void(const SDL_Keycode, cbool keyDown)>;
+    using ResizeFunc = std::function<void(cint, cint)>;
 
-	static void init();
-	static void destroy();
-	static Vec2i getSize();
-	static SDL_Renderer *getSdlRenderer();
-	static void update();
-	static bool shouldQuit();
-	static void onKeyChange(const KeyChangeFunc func);
-	static void onResize(const ResizeFunc func);
+    static void init();
+    static void destroy();
+    static Vec2i getSize();
+    static SDL_Renderer *getSdlRenderer();
+    static void update();
+    static bool shouldQuit();
+    static void onKeyChange(const KeyChangeFunc func);
+    static void onResize(const ResizeFunc func);
 
 private:
-	static cint screenWidth = 640;
-	static cint screenHeight = 480;
+    static cint screenWidth = 640;
+    static cint screenHeight = 480;
 
-	static bool mustQuit;
-	static std::vector<KeyChangeFunc> keyChangeFuncs;
-	static std::vector<ResizeFunc> resizeFuncs;
+    static bool mustQuit;
+    static std::vector<KeyChangeFunc> keyChangeFuncs;
+    static std::vector<ResizeFunc> resizeFuncs;
 
-	static SDL_Window *window;
-	static SDL_Renderer *renderer;
+    static SDL_Window *window;
+    static SDL_Renderer *renderer;
 };

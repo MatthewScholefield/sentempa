@@ -6,35 +6,34 @@
 #include "types.hpp"
 
 class Renderer;
+
 class Camera;
 
-class StarField
-{
+class StarField {
 public:
-	void refill(const Camera &camera);
-	void update(cfloat dt, const Camera &camera);
-	void render(Renderer &renderer, const Camera &camera) const;
-	
+    void refill(const Camera &camera);
+    void update(cfloat dt, const Camera &camera);
+    void render(Renderer &renderer, const Camera &camera) const;
+
 private:
-	static constexpr int maxStars = 20000;
-	static constexpr float starSize = 800.f;
+    static constexpr int maxStars = 20000;
+    static constexpr float starSize = 800.f;
 
-	class Star
-	{
-	public:
-		void update(cfloat dt);
-		bool shouldRemove(const Vec2i &size) const;
-		Vec3f p;
-	};
-	std::vector<Star> stars;
+    class Star {
+    public:
+        void update(cfloat dt);
+        bool shouldRemove(const Vec2i &size) const;
+        Vec3f p;
+    };
 
-	class Box
-	{
-	public:
-		Vec3f pos;
-		Vec3f size;
-	};
+    std::vector<Star> stars;
 
-	// Area containing all existing stars
-	Box box;
+    class Box {
+    public:
+        Vec3f pos;
+        Vec3f size;
+    };
+
+    // Area containing all existing stars
+    Box box;
 };
